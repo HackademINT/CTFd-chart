@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "ctfd.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.deployment.replicaCount }}
   selector:
     matchLabels:
       {{- include "ctfd.selectorLabels" . | nindent 6 }}
@@ -17,6 +17,6 @@ spec:
       containers:
         - name: ctfd
           image: {{ .Values.image }}
-          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          imagePullPolicy: {{ .Values.deployment.imagePullPolicy }}
           ports:
             - containerPort: 8000

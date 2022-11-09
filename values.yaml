@@ -1,6 +1,9 @@
-replicaCount: 1
+hostname: example.com
 image: ghcr.io/ctfd/ctfd:3.5.0
-imagePullPolicy: Always
+
+deployment:
+  replicaCount: 1
+  imagePullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
@@ -8,4 +11,3 @@ service:
 
 ingress:
   enabled: true
-  hostname: example.com

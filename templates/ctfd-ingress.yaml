@@ -7,7 +7,7 @@ metadata:
     {{- include "ctfd.labels" . | nindent 4 }}
 spec:
   rules:
-    - host: {{ .Values.ingress.hostname | quote }}
+    - host: {{ .Values.hostname | quote }}
       http:
         paths:
           - path: /
