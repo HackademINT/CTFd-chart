@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ctfd.fullname" . }}
+  labels:
+    {{- include "ctfd.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "ctfd.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "ctfd.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: ctfd
+          image: {{ .Values.image }}
+          imagePullPolicy: {{ .Values.deployment.imagePullPolicy }}
+          ports:
+            - containerPort: 8000

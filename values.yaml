@@ -1,0 +1,13 @@
+hostname: example.com
+image: ghcr.io/ctfd/ctfd:3.5.0
+
+deployment:
+  replicaCount: 1
+  imagePullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true

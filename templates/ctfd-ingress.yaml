@@ -1,0 +1,20 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "ctfd.fullname" . }}
+  labels:
+    {{- include "ctfd.labels" . | nindent 4 }}
+spec:
+  rules:
+    - host: {{ .Values.hostname | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "ctfd.fullname" . }}
+                port:
+                  name: http
+{{- end  }}
