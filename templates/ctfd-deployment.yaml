@@ -18,5 +18,143 @@ spec:
         - name: ctfd
           image: {{ .Values.image }}
           imagePullPolicy: {{ .Values.deployment.imagePullPolicy }}
+          env:
+            - name: SESSION_COOKIE_HTTPONLY
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: security.sessionCookie.httponly
+            - name: SESSION_COOKIE_SAMESITE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: security.sessionCookie.samesite
+            - name: PERMANENT_SESSION_LIFETIME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: security.permanentSessionLifetime
+            - name: MAILFROM_ADDR
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: email.addressFrom
+            - name: MAIL_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: email.server
+            - name: MAIL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: email.port
+            - name: MAIL_USEAUTH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: email.useAuth
+            - name: MAIL_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: email.username
+            - name: MAIL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: email.password
+            - name: MAIL_TLS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: email.tls
+            - name: MAIL_SSL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: email.ssl
+            - name: MAILSENDER_ADDR
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: email.addressSender
+            - name: MAILGUN_API_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: email.mailgun.apiKey
+            - name: MAILGUN_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: email.mailgun.baseUrl
+            - name: LOG_FOLDER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: logFolder
+            - name: REVERSE_PROXY
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: optional.reverseProxy
+            - name: THEME_FALLBACK
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: optional.themeFallback
+            - name: TEMPLATES_AUTO_RELOAD
+              value: "false"
+            - name: SQLALCHEMY_TRACK_MODIFICATIONS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: optional.sqlAlchemy.trackModifications
+            - name: SWAGGER_UI
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: optional.swaggerUi
+            - name: UPDATE_CHECK
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: optional.updateCheck
+            - name: SERVER_SENT_EVENTS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: optional.serverSentEvents
+            - name: HTML_SANITIZATION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: optional.htmlSanitization
+            - name: SQLALCHEMY_MAX_OVERFLOW
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: optional.sqlAlchemy.maxOverflow
+            - name: SQLALCHEMY_POOL_PRE_PING
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: optional.sqlAlchemy.poolPrePing
+            - name: SAFE_MODE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: optional.safeMode
+            - name: OAUTH_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: oauth.clientId
+            - name: OAUTH_CLIENT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ctfd.fullname" . }}
+                  key: oauth.clientSecret
           ports:
             - containerPort: 8000
