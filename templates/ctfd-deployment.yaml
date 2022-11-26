@@ -23,12 +23,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: security.sessionCookie.httponly
+                  key: security.sessionCookie.httpOnly
             - name: SESSION_COOKIE_SAMESITE
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: security.sessionCookie.samesite
+                  key: security.sessionCookie.sameSite
             - name: PERMANENT_SESSION_LIFETIME
               valueFrom:
                 configMapKeyRef:

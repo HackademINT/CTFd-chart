@@ -5,8 +5,8 @@ metadata:
   labels:
     {{- include "ctfd.labels" . | nindent 4 }}
 data:
-    security.sessionCookie.httponly: {{ .Values.ctfd.security.sessionCookie.httponly | quote }}
-    security.sessionCookie.samesite: {{ .Values.ctfd.security.sessionCookie.samesite | quote }}
+    security.sessionCookie.httpOnly: {{ .Values.ctfd.security.sessionCookie.httpOnly | quote }}
+    security.sessionCookie.sameSite: {{ .Values.ctfd.security.sessionCookie.sameSite | quote }}
     security.permanentSessionLifetime: {{ .Values.ctfd.security.permanentSessionLifetime | quote }}
     email.addressFrom: {{ .Values.ctfd.email.addressFrom | quote }}
     email.server: {{ .Values.ctfd.email.server | quote }}

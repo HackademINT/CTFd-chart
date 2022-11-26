@@ -4,8 +4,8 @@ image: ghcr.io/ctfd/ctfd:3.5.0
 ctfd:
   security:
     sessionCookie:
-      httponly: true
-      samesite: "Lax"
+      httpOnly: true
+      sameSite: "Lax"
     permanentSessionLifetime: 604800
   email:
     addressFrom: ""
