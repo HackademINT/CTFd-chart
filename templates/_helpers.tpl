@@ -49,3 +49,15 @@ Selector labels
 app.kubernetes.io/name: {{ include "ctfd.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+Lookup CTFd secret
+*/}}
+{{- define "ctfd.secret.secretKey" -}}
+{{- $secret := lookup "v1" "Secret" .Release.Namespace ( include "ctfd.fullname" . ) -}}
+{{- if and $secret $secret.data.secretKey -}}
+{{ $secret.data.secretKey }}
+{{- else -}}
+{{ randAlphaNum 64 | b64enc }}
+{{- end -}}
+{{- end -}}

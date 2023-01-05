@@ -19,6 +19,11 @@ spec:
           image: {{ .Values.image }}
           imagePullPolicy: {{ .Values.deployment.imagePullPolicy }}
           env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: secretKey
+                  name: {{ include "ctfd.fullname" . }}
             - name: SESSION_COOKIE_HTTPONLY
               valueFrom:
                 configMapKeyRef:
