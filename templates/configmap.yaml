@@ -12,12 +12,9 @@ data:
     email.server: {{ .Values.ctfd.email.server | quote }}
     email.port: {{ .Values.ctfd.email.port | quote }}
     email.useAuth: {{ .Values.ctfd.email.useAuth | quote }}
-    email.username: {{ .Values.ctfd.email.username | quote }}
-    email.password: {{ .Values.ctfd.email.password | quote }}
     email.tls: {{ .Values.ctfd.email.tls | quote }}
     email.ssl: {{ .Values.ctfd.email.ssl | quote }}
     email.addressSender: {{ .Values.ctfd.email.addressSender | quote }}
-    email.mailgun.apiKey: {{ .Values.ctfd.email.mailgun.apiKey | quote }}
     email.mailgun.baseUrl: {{ .Values.ctfd.email.mailgun.baseUrl | quote }}
     logFolder: {{ .Values.ctfd.logFolder | quote }}
     optional.reverseProxy: {{ .Values.ctfd.optional.reverseProxy | quote }}
@@ -30,5 +27,3 @@ data:
     optional.sqlAlchemy.trackModifications: {{ .Values.ctfd.optional.sqlAlchemy.trackModifications | quote }}
     optional.sqlAlchemy.poolPrePing: {{ .Values.ctfd.optional.sqlAlchemy.poolPrePing | quote }}
     optional.safeMode: {{ .Values.ctfd.optional.safeMode | quote }}
-    oauth.clientId: {{ .Values.ctfd.oauth.clientId | quote }}
-    oauth.clientSecret: {{ .Values.ctfd.oauth.clientSecret | quote }}

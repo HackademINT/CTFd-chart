@@ -22,7 +22,7 @@ spec:
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  key: secretKey
+                  key: flaskSecretKey
                   name: {{ include "ctfd.fullname" . }}
             - name: SESSION_COOKIE_HTTPONLY
               valueFrom:
@@ -59,16 +59,18 @@ spec:
                 configMapKeyRef:
                   name: {{ include "ctfd.fullname" . }}
                   key: email.useAuth
+            {{- if .Values.ctfd.email.useAuth }}
             - name: MAIL_USERNAME
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: email.username
+                  key: emailUsername
             - name: MAIL_PASSWORD
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: email.password
+                  key: emailPassword
+            {{- end }}
             - name: MAIL_TLS
               valueFrom:
                 configMapKeyRef:
@@ -86,9 +88,9 @@ spec:
                   key: email.addressSender
             - name: MAILGUN_API_KEY
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: email.mailgun.apiKey
+                  key: mailgunApiKey
             - name: MAILGUN_BASE_URL
               valueFrom:
                 configMapKeyRef:
@@ -153,13 +155,13 @@ spec:
                   key: optional.safeMode
             - name: OAUTH_CLIENT_ID
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: oauth.clientId
+                  key: oauthClientId
             - name: OAUTH_CLIENT_SECRET
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: oauth.clientSecret
+                  key: oauthClientSecret
           ports:
             - containerPort: 8000
