@@ -1,6 +1,42 @@
 hostname: example.com
 image: ghcr.io/ctfd/ctfd:3.5.0
 
+ctfd:
+  security:
+    sessionCookie:
+      httpOnly: true
+      sameSite: "Lax"
+    permanentSessionLifetime: 604800
+  email:
+    addressFrom: ""
+    server: ""
+    port: ""
+    useAuth: true
+    username: ""
+    password: ""
+    tls: ""
+    ssl: ""
+    addressSender: ""
+    mailgun:
+      apiKey: ""
+      baseUrl: ""
+  logFolder: ""
+  optional:
+    reverseProxy: true
+    themeFallback: true
+    swaggerUi: false
+    updateCheck: true
+    serverSentEvents: true
+    htmlSanitization: false
+    sqlAlchemy:
+      trackModifications: false
+      maxOverflow: ""
+      poolPrePing: ""
+    safeMode: false
+  oauth:
+    clientId: ""
+    clientSecret: ""
+
 deployment:
   replicaCount: 1
   imagePullPolicy: IfNotPresent

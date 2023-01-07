@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ctfd.fullname" . }}
+  labels:
+    {{- include "ctfd.labels" . | nindent 4 }}
+data:
+    security.sessionCookie.httpOnly: {{ .Values.ctfd.security.sessionCookie.httpOnly | quote }}
+    security.sessionCookie.sameSite: {{ .Values.ctfd.security.sessionCookie.sameSite | quote }}
+    security.permanentSessionLifetime: {{ .Values.ctfd.security.permanentSessionLifetime | quote }}
+    email.addressFrom: {{ .Values.ctfd.email.addressFrom | quote }}
+    email.server: {{ .Values.ctfd.email.server | quote }}
+    email.port: {{ .Values.ctfd.email.port | quote }}
+    email.useAuth: {{ .Values.ctfd.email.useAuth | quote }}
+    email.tls: {{ .Values.ctfd.email.tls | quote }}
+    email.ssl: {{ .Values.ctfd.email.ssl | quote }}
+    email.addressSender: {{ .Values.ctfd.email.addressSender | quote }}
+    email.mailgun.baseUrl: {{ .Values.ctfd.email.mailgun.baseUrl | quote }}
+    logFolder: {{ .Values.ctfd.logFolder | quote }}
+    optional.reverseProxy: {{ .Values.ctfd.optional.reverseProxy | quote }}
+    optional.themeFallback: {{ .Values.ctfd.optional.themeFallback | quote }}
+    optional.swaggerUi: {{ .Values.ctfd.optional.swaggerUi | quote }}
+    optional.updateCheck: {{ .Values.ctfd.optional.updateCheck | quote }}
+    optional.serverSentEvents: {{ .Values.ctfd.optional.serverSentEvents | quote }}
+    optional.htmlSanitization: {{ .Values.ctfd.optional.htmlSanitization | quote }}
+    optional.sqlAlchemy.maxOverflow: {{ .Values.ctfd.optional.sqlAlchemy.maxOverflow | quote }}
+    optional.sqlAlchemy.trackModifications: {{ .Values.ctfd.optional.sqlAlchemy.trackModifications | quote }}
+    optional.sqlAlchemy.poolPrePing: {{ .Values.ctfd.optional.sqlAlchemy.poolPrePing | quote }}
+    optional.safeMode: {{ .Values.ctfd.optional.safeMode | quote }}
