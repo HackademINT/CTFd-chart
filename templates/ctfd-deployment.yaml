@@ -19,8 +19,8 @@ spec:
     spec:
       containers:
         - name: ctfd
-          image: {{ .Values.image }}
-          imagePullPolicy: {{ .Values.deployment.imagePullPolicy }}
+          image: {{ .Values.deployment.image.image | quote }}
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
           env:
             - name: SECRET_KEY
               valueFrom:
@@ -168,3 +168,7 @@ spec:
                   key: oauthClientSecret
           ports:
             - containerPort: 8000
+      {{- if .Values.deployment.image.pullSecret }}
+      imagePullSecrets:
+        - name: {{ .Values.deployment.image.pullSecret | quote}}
+      {{- end }}
