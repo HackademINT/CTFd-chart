@@ -1,5 +1,4 @@
 hostname: example.com
-image: ghcr.io/ctfd/ctfd:3.5.0
 
 ctfd:
   security:
@@ -38,8 +37,11 @@ ctfd:
     clientSecret: ""
 
 deployment:
+  image:
+    image: registry.hackademint.org/hackademint/ctfd/develop:latest
+    pullSecret: ""
+    pullPolicy: IfNotPresent
   replicaCount: 1
-  imagePullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
