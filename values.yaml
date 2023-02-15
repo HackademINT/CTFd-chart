@@ -49,3 +49,13 @@ service:
 
 ingress:
   enabled: true
+
+mariadb:
+  enabled: true
+  auth:
+    createDatabase: true
+    database: "ctfd"
+    username: "ctfd"
+
+externalDatabase:
+  existingSecret: ""
