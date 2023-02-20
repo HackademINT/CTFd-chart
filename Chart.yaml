@@ -1,5 +1,5 @@
 apiVersion: v2
-name: "CTFd"
+name: "ctfd"
 description: "A chart to deploy a CTFd instance on Kubernetes."
 
 type: application
@@ -10,3 +10,9 @@ version: 0.1.0
 # The CTFd version.
 # It does not need to follow semver
 appVersion: "3.5.0"
+
+dependencies:
+  - condition: mariadb.enabled
+    name: mariadb
+    repository: https://charts.bitnami.com/bitnami
+    version: 11.4.x

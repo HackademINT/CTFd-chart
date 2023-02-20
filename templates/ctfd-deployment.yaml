@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "ctfd.fullname" . }}
+  name: {{ include "ctfd.ctfd.deployment.name" . }}
   labels:
     {{- include "ctfd.labels" . | nindent 4 }}
   annotations:
@@ -27,6 +27,39 @@ spec:
                 secretKeyRef:
                   key: flaskSecretKey
                   name: {{ include "ctfd.fullname" . }}
+            {{ if .Values.mariadb.enabled -}}
+            - name: DATABASE_PROTOCOL
+              value: "mysql+pymysql"
+            - name: DATABASE_HOST
+              value: {{ include "ctfd.maridb.serviceName" . | quote }}
+            - name: DATABASE_PORT
+              value: "3306"
+            - name: DATABASE_NAME
+              value: {{ .Values.mariadb.auth.database | quote }}
+            - name: DATABASE_USER
+              value: {{ .Values.mariadb.auth.username | quote }}
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: mariadb-password
+                  name: {{ include "ctfd.maridb.databaseSecretName" . | quote }}
+            {{ else if .Values.externalDatabase.enabled -}}
+            - name: DATABASE_PROTOCOL
+              value: "mysql+pymysql"
+            - name: DATABASE_HOST
+              value: {{ .Values.externalDatabase.host | quote }}
+            - name: DATABASE_PORT
+              value: {{ .Values.externalDatabase.port | quote }}
+            - name: DATABASE_NAME
+              value: {{ .Values.externalDatabase.database | quote }}
+            - name: DATABASE_USER
+              value: {{ .Values.externalDatabase.user | quote }}
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: mariadb-password
+                  name: {{ include "ctfd.maridb.databaseSecretName" . | quote }}
+            {{ end -}}
             - name: SESSION_COOKIE_HTTPONLY
               valueFrom:
                 configMapKeyRef:
