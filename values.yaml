@@ -50,12 +50,60 @@ service:
 ingress:
   enabled: true
 
+## @section Database Parameters
+##
+
+## MariaDB chart configuration
+## ref: https://github.com/bitnami/charts/blob/main/bitnami/mariadb/values.yaml
+##
 mariadb:
+  ## @param mariadb.enabled Deploy a MariaDB server to satisfy the applications database requirements
+  ## To use an external database set this to false and configure the `externalDatabase.*` parameters
+  ## If neither this nor `externalDatabase.enabled` is set, CTFd will use a temporary SQLite database as a fallback
+  ##
   enabled: true
+  ## @param mariadb.architecture MariaDB architecture. Allowed values: `standalone` or `replication`
+  ##
+  architecture: standalone
+  ## MariaDB Authentication parameters. If passwords are not provided, they will be generated randomly.
+  ## @param mariadb.auth.rootPassword MariaDB root password
+  ## @param mariadb.auth.database MariaDB custom database
+  ## @param mariadb.auth.username MariaDB custom username
+  ## @param mariadb.auth.password MariaDB custom user password
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mariadb#setting-the-root-password-on-first-run
+  ##      https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-on-first-run
+  ##      https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-user-on-first-run
+  ##
   auth:
     createDatabase: true
     database: "ctfd"
     username: "ctfd"
 
+## External database configuration
+## These values are ignored unless mariadb.enable is set to false
+##
 externalDatabase:
+  ## @param externalDatabase.enabled Whether to use an external database
+  ## CTFd will default to a temporary sqlite database if non is provided
+  ##
+  enabled: false
+  ## @param externalDatabase.host External Database server host
+  ##
+  host: "localhost"
+  ## @param externalDatabase.port External Database server port
+  ##
+  port: 3306
+  ## @param externalDatabase.user External Database username
+  ##
+  user: "ctfd"
+  ## @param externalDatabase.password External Database user password
+  ##
+  password: ""
+  ## @param externalDatabase.database External Database database name
+  ##
+  database: "ctfd"
+  ## @param externalDatabase.existingSecret The name of an existing secret with database credentials. Evaluated as a template
+  ## NOTE: Must contain key `mariadb-password`
+  ## NOTE: When it's set, the `externalDatabase.password` parameter is ignored
+  ##
   existingSecret: ""
