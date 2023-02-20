@@ -78,6 +78,22 @@ mariadb:
     createDatabase: true
     database: "ctfd"
     username: "ctfd"
+  ## MariaDB Primary configuration
+  ##
+  primary:
+    ## MariaDB Primary Persistence parameters
+    ## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+    ## @param mariadb.primary.persistence.enabled Enable persistence on MariaDB using PVC(s)
+    ## @param mariadb.primary.persistence.storageClass Persistent Volume storage class
+    ## @param mariadb.primary.persistence.accessModes [array] Persistent Volume access modes
+    ## @param mariadb.primary.persistence.size Persistent Volume size
+    ##
+    persistence:
+      enabled: true
+      storageClass: ""
+      accessModes:
+        - ReadWriteOnce
+      size: 8Gi
 
 ## External database configuration
 ## These values are ignored unless mariadb.enable is set to false
