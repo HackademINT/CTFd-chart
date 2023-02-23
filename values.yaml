@@ -38,7 +38,7 @@ ctfd:
 
 deployment:
   image:
-    image: registry.hackademint.org/hackademint/ctfd/develop:latest
+    image: ghcr.io/ctfd/ctfd:3.5.1
     pullSecret: ""
     pullPolicy: IfNotPresent
   replicaCount: 1
