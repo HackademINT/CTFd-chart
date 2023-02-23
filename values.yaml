@@ -1,54 +1,69 @@
-hostname: example.com
+## @section CTFd configuration parameters
+## CTFd is configured using environment variables
+## Official documentation : https://docs.ctfd.io/docs/deployment/configuration
+##
 
-ctfd:
-  security:
-    sessionCookie:
-      httpOnly: true
-      sameSite: "Lax"
-    permanentSessionLifetime: 604800
-  email:
-    addressFrom: ""
-    server: ""
-    port: ""
-    useAuth: true
-    username: ""
-    password: ""
-    tls: ""
-    ssl: ""
-    addressSender: ""
-    mailgun:
-      apiKey: ""
-      baseUrl: ""
-  logFolder: ""
-  optional:
-    reverseProxy: true
-    themeFallback: true
-    swaggerUi: false
-    updateCheck: true
-    serverSentEvents: true
-    htmlSanitization: false
-    sqlAlchemy:
-      trackModifications: false
-      maxOverflow: ""
-      poolPrePing: ""
-    safeMode: false
-  oauth:
-    clientId: ""
-    clientSecret: ""
+security:
+  sessionCookie:
+    httpOnly: true
+    sameSite: "Lax"
+  permanentSessionLifetime: 604800
+email:
+  addressFrom: ""
+  server: ""
+  port: ""
+  useAuth: true
+  username: ""
+  password: ""
+  tls: ""
+  ssl: ""
+  addressSender: ""
+  mailgun:
+    apiKey: ""
+    baseUrl: ""
+logFolder: ""
+optional:
+  reverseProxy: true
+  themeFallback: true
+  swaggerUi: false
+  updateCheck: true
+  serverSentEvents: true
+  htmlSanitization: false
+  sqlAlchemy:
+    trackModifications: false
+    maxOverflow: ""
+    poolPrePing: ""
+  safeMode: false
+oauth:
+  clientId: ""
+  clientSecret: ""
 
-deployment:
-  image:
-    image: ghcr.io/ctfd/ctfd:3.5.1
-    pullSecret: ""
-    pullPolicy: IfNotPresent
-  replicaCount: 1
+## @section CTFd image parameters
+##
+
+image:
+  image: "ghcr.io/ctfd/ctfd:3.5.1"
+  pullSecret: ""
+  pullPolicy: IfNotPresent
+
+## @section CTFd deployment parameters
+##
+
+replicaCount: 1
+
+## @section CTFd service parameters
+##
 
 service:
   type: ClusterIP
   port: 80
 
+## @section CTFd ingress parameters
+##
+
 ingress:
   enabled: true
+  hostname: example.com
 
 ## @section Database Parameters
 ##

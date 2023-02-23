@@ -14,7 +14,7 @@
 {{- if and $secret $secret.data.emailUsername -}}
 {{ $secret.data.emailUsername | b64dec }}
 {{- else -}}
-{{ .Values.ctfd.email.username }}
+{{ .Values.email.username }}
 {{- end -}}
 {{- end -}}
 
@@ -24,7 +24,7 @@
 {{- if and $secret $secret.data.emailPassword -}}
 {{ $secret.data.emailPassword | b64dec }}
 {{- else -}}
-{{ .Values.ctfd.email.password }}
+{{ .Values.email.password }}
 {{- end -}}
 {{- end -}}
 
@@ -34,7 +34,7 @@
 {{- if and $secret $secret.data.mailgunApiKey -}}
 {{ $secret.data.mailgunApiKey | b64dec }}
 {{- else -}}
-{{ .Values.ctfd.email.mailgun.apiKey }}
+{{ .Values.email.mailgun.apiKey }}
 {{- end -}}
 {{- end -}}
 
@@ -44,7 +44,7 @@
 {{- if and $secret $secret.data.oauthClientId -}}
 {{ $secret.data.oauthClientId | b64dec }}
 {{- else -}}
-{{ .Values.ctfd.oauth.clientId }}
+{{ .Values.oauth.clientId }}
 {{- end -}}
 {{- end -}}
 
@@ -54,6 +54,6 @@
 {{- if and $secret $secret.data.oauthClientSecret -}}
 {{ $secret.data.oauthClientSecret | b64dec }}
 {{- else -}}
-{{ .Values.ctfd.oauth.clientSecret }}
+{{ .Values.oauth.clientSecret }}
 {{- end -}}
 {{- end -}}

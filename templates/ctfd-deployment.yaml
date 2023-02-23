@@ -8,7 +8,7 @@ metadata:
     checksum/ctfd-config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     checksum/ctfd-secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
 spec:
-  replicas: {{ .Values.deployment.replicaCount }}
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "ctfd.selectorLabels" . | nindent 6 }}
@@ -19,8 +19,8 @@ spec:
     spec:
       containers:
         - name: ctfd
-          image: {{ .Values.deployment.image.image | quote }}
-          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+          image: {{ .Values.image.image | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: SECRET_KEY
               valueFrom:
@@ -95,7 +95,7 @@ spec:
                 configMapKeyRef:
                   name: {{ include "ctfd.fullname" . }}
                   key: email.useAuth
-            {{- if .Values.ctfd.email.useAuth }}
+            {{- if .Values.email.useAuth }}
             - name: MAIL_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -201,7 +201,7 @@ spec:
                   key: oauthClientSecret
           ports:
             - containerPort: 8000
-      {{- if .Values.deployment.image.pullSecret }}
+      {{- if .Values.image.pullSecret }}
       imagePullSecrets:
-        - name: {{ .Values.deployment.image.pullSecret | quote}}
+        - name: {{ .Values.image.pullSecret | quote}}
       {{- end }}
