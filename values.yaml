@@ -143,6 +143,18 @@ externalDatabase:
 ## Reference: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 ##
 
+## Readiness probe parameters
+## @param enabled whether to enable the probe
+## Other parameters are interpreted as the probe's YAML template
+##
+readinessProbe:
+  enabled: true
+  httpGet:
+    path: /healthcheck
+    port: 8000
+  initialDelaySeconds: 10
+  periodSeconds: 3
+
 ## Liveness probe parameters
 ## @param enabled whether to enable the probe
 ## Other parameters are interpreted as the probe's YAML template
