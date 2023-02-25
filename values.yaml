@@ -138,3 +138,19 @@ externalDatabase:
   ## NOTE: When it's set, the `externalDatabase.password` parameter is ignored
   ##
   existingSecret: ""
+
+## @section CTFd probes parameters
+## Reference: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+##
+
+## Liveness probe parameters
+## @param enabled whether to enable the probe
+## Other parameters are interpreted as the probe's YAML template
+##
+livenessProbe:
+  enabled: true
+  httpGet:
+    path: /healthcheck
+    port: 8000
+  initialDelaySeconds: 10
+  periodSeconds: 3
