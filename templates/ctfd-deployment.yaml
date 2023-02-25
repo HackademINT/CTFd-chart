@@ -201,6 +201,9 @@ spec:
                   key: oauthClientSecret
           ports:
             - containerPort: 8000
+          {{- if .Values.startupProbe.enabled }}
+          livenessProbe: {{- include "ctfd.util.render" ( dict "value" (omit .Values.startupProbe "enabled") "context" $) | nindent 12 }}
+          {{- end }}
           {{- if .Values.readinessProbe.enabled }}
           readinessProbe: {{- include "ctfd.util.render" ( dict "value" (omit .Values.readinessProbe "enabled") "context" $) | nindent 12 }}
           {{- end }}
