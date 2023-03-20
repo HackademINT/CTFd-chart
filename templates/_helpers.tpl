@@ -49,3 +49,18 @@ Selector labels
 app.kubernetes.io/name: {{ include "ctfd.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+Renders a value that contains template.
+Usage:
+{{ include "ctfd.util.render" ( dict "value" .Values.path.to.the.Value "context" $) }}
+
+Copied from Bitnami: https://github.com/bitnami/charts/blob/9401e13316992c36b0e33de75d5f249645a2924e/bitnami/common/templates/_tplvalues.tpl
+*/}}
+{{- define "ctfd.util.render" -}}
+    {{- if typeIs "string" .value -}}
+        {{- tpl .value .context -}}
+    {{- else -}}
+        {{- tpl (.value | toYaml) .context -}}
+    {{- end -}}
+{{- end -}}

@@ -27,7 +27,7 @@ spec:
                 secretKeyRef:
                   key: flaskSecretKey
                   name: {{ include "ctfd.fullname" . }}
-            {{ if .Values.mariadb.enabled -}}
+            {{- if .Values.mariadb.enabled }}
             - name: DATABASE_PROTOCOL
               value: "mysql+pymysql"
             - name: DATABASE_HOST
@@ -43,7 +43,7 @@ spec:
                 secretKeyRef:
                   key: mariadb-password
                   name: {{ include "ctfd.maridb.databaseSecretName" . | quote }}
-            {{ else if .Values.externalDatabase.enabled -}}
+            {{- else if .Values.externalDatabase.enabled }}
             - name: DATABASE_PROTOCOL
               value: "mysql+pymysql"
             - name: DATABASE_HOST
@@ -59,7 +59,7 @@ spec:
                 secretKeyRef:
                   key: mariadb-password
                   name: {{ include "ctfd.maridb.databaseSecretName" . | quote }}
-            {{ end -}}
+            {{- end }}
             - name: SESSION_COOKIE_HTTPONLY
               valueFrom:
                 configMapKeyRef:
@@ -200,8 +200,19 @@ spec:
                   name: {{ include "ctfd.fullname" . }}
                   key: oauthClientSecret
           ports:
-            - containerPort: 8000
+            - name: http
+              protocol: TCP
+              containerPort: {{ .Values.httpPort }}
+          {{- if .Values.startupProbe.enabled }}
+          startupProbe: {{- include "ctfd.util.render" ( dict "value" (omit .Values.startupProbe "enabled") "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe: {{- include "ctfd.util.render" ( dict "value" (omit .Values.readinessProbe "enabled") "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe: {{- include "ctfd.util.render" ( dict "value" (omit .Values.livenessProbe "enabled") "context" $) | nindent 12 }}
+          {{- end }}
       {{- if .Values.image.pullSecret }}
       imagePullSecrets:
-        - name: {{ .Values.image.pullSecret | quote}}
+        - name: {{ .Values.image.pullSecret | quote }}
       {{- end }}
