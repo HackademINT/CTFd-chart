@@ -200,9 +200,11 @@ spec:
                   name: {{ include "ctfd.fullname" . }}
                   key: oauthClientSecret
           ports:
-            - containerPort: 8000
+            - name: http
+              protocol: TCP
+              containerPort: {{ .Values.httpPort }}
           {{- if .Values.startupProbe.enabled }}
-          livenessProbe: {{- include "ctfd.util.render" ( dict "value" (omit .Values.startupProbe "enabled") "context" $) | nindent 12 }}
+          startupProbe: {{- include "ctfd.util.render" ( dict "value" (omit .Values.startupProbe "enabled") "context" $) | nindent 12 }}
           {{- end }}
           {{- if .Values.readinessProbe.enabled }}
           readinessProbe: {{- include "ctfd.util.render" ( dict "value" (omit .Values.readinessProbe "enabled") "context" $) | nindent 12 }}
@@ -212,5 +214,5 @@ spec:
           {{- end }}
       {{- if .Values.image.pullSecret }}
       imagePullSecrets:
-        - name: {{ .Values.image.pullSecret | quote}}
+        - name: {{ .Values.image.pullSecret | quote }}
       {{- end }}

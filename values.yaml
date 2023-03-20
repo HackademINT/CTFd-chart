@@ -38,6 +38,10 @@ oauth:
   clientId: ""
   clientSecret: ""
 
+## @section Configuration
+## @param httpPort The http port the CTFd container listens on
+httpPort: 8000
+
 ## @section CTFd image parameters
 ##
 
@@ -151,7 +155,7 @@ startupProbe:
   enabled: false
   httpGet:
     path: /healthcheck
-    port: 8000
+    port: 'http'
   initialDelaySeconds: 5
   periodSeconds: 3
 
@@ -163,8 +167,8 @@ readinessProbe:
   enabled: true
   httpGet:
     path: /healthcheck
-    port: 8000
-  initialDelaySeconds: 5
+    port: 'http'
+  initialDelaySeconds: 10
   periodSeconds: 3
 
 ## Liveness probe parameters
@@ -175,6 +179,6 @@ livenessProbe:
   enabled: true
   httpGet:
     path: /healthcheck
-    port: 8000
+    port: 'http'
   initialDelaySeconds: 10
   periodSeconds: 3
