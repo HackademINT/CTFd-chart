@@ -3,6 +3,11 @@
 {{- printf "%s-ctfd" (include "ctfd.fullname" .) -}}
 {{- end -}}
 
+{{/* MariaDB service */}}
+{{- define "ctfd.maridb.serviceName" -}}
+    {{- printf "%s-mariadb" (include "common.names.fullname" .) -}}
+{{- end -}}
+
 {{/*
   Return the database Secret Name, which contains the database's password.
   The secret may stem from different places:
@@ -23,8 +28,13 @@
 {{- end -}}
 {{- end -}}
 
-{{/* CTFd service */}}
-{{- define "ctfd.maridb.serviceName" -}}
-    {{- printf "%s-mariadb" (include "common.names.fullname" .) -}}
+{{/* Redis service */}}
+{{- define "ctfd.redis.serviceName" -}}
+    {{- printf "%s-redis-master" (include "common.names.fullname" .) -}}
 {{- end -}}
 
+{{- define "ctfd.redis.redisSecretName" -}}
+{{- if .Values.redis.enabled -}}
+  {{- printf "%s-redis" (include "common.names.fullname" .) -}}
+{{- end -}}
+{{- end -}}

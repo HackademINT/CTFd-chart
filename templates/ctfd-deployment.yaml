@@ -33,7 +33,7 @@ spec:
             - name: DATABASE_HOST
               value: {{ include "ctfd.maridb.serviceName" . | quote }}
             - name: DATABASE_PORT
-              value: "3306"
+              value: {{ .Values.mariadb.primary.service.ports.mysql | quote }}
             - name: DATABASE_NAME
               value: {{ .Values.mariadb.auth.database | quote }}
             - name: DATABASE_USER
@@ -59,6 +59,21 @@ spec:
                 secretKeyRef:
                   key: mariadb-password
                   name: {{ include "ctfd.maridb.databaseSecretName" . | quote }}
+            {{- end }}
+            {{- if .Values.redis.enabled }}
+            - name: REDIS_HOST
+              value: {{ include "ctfd.redis.serviceName" . | quote }}
+            - name: REDIS_PROTOCOL
+              value: "redis"
+            - name: REDIS_USER
+              value: ""
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: redis-password
+                  name: {{ include "ctfd.redis.redisSecretName" . | quote }}
+            - name: REDIS_PORT
+              value: {{ .Values.redis.master.service.ports.redis | quote }}
             {{- end }}
             - name: SESSION_COOKIE_HTTPONLY
               valueFrom:

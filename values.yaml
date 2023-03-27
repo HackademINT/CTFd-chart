@@ -145,7 +145,7 @@ externalDatabase:
 
 redis:
   enabled: true
-
+  architecture: standalone
 ## @section CTFd probes parameters
 ## Reference: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 ##
