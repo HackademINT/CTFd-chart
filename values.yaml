@@ -157,7 +157,7 @@ redis:
 startupProbe:
   enabled: false
   httpGet:
-    path: /healthcheck
+    path: /
     port: 'http'
   initialDelaySeconds: 5
   periodSeconds: 3
@@ -169,7 +169,7 @@ startupProbe:
 readinessProbe:
   enabled: true
   httpGet:
-    path: /healthcheck
+    path: /
     port: 'http'
   initialDelaySeconds: 10
   periodSeconds: 3
@@ -181,7 +181,7 @@ readinessProbe:
 livenessProbe:
   enabled: true
   httpGet:
-    path: /healthcheck
+    path: /
     port: 'http'
   initialDelaySeconds: 10
   periodSeconds: 3
