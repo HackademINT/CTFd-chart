@@ -90,7 +90,21 @@
   {{- if .Values.externalRedis.existingSecret -}}
     {{- printf "%s" .Values.externalRedis.existingSecret -}}
   {{- else -}}
-    {{- printf "%s-db" (include "common.names.fullname" .) -}}
+    {{- printf "%s-redis" (include "common.names.fullname" .) -}}
   {{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+  Returns the name of the secret which contains the S3 credentials credentials.
+  This will either be :
+    - A secret generated from the externalS3.accessKey and externalS3.secretKey values
+    - or a user provided secret if the externalS3.existingSecret value is set
+*/}}
+{{- define "ctfd.s3.s3SecretName" -}}
+{{- if .Values.externalS3.existingSecret -}}
+  {{- .Values.externalS3.existingSecret -}}
+{{- else -}}
+  {{- printf "%s-s3" (include "common.names.fullname" .) -}}
 {{- end -}}
 {{- end -}}
