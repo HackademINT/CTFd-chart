@@ -12,6 +12,9 @@ data:
   mail.addressFrom: {{ .Values.mail.addressFrom | quote }}
   {{- end }}
   {{- if .Values.mail.smtp.enabled }}
+    {{- if empty .Values.mail.smtp.server }}
+      {{- fail "SMTP is enabled but no hostname was provided. Please set the mail.smtp.server value." }}
+    {{- end }}
   smtp.server: {{ .Values.mail.smtp.server | quote }}
   smtp.port: {{ .Values.mail.smtp.port | quote }}
   smtp.useAuth: {{ .Values.mail.smtp.useAuth | quote }}

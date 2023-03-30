@@ -13,12 +13,12 @@ mail:
   smtp:
     enabled: false
     server: ""
-    port: ""
-    useAuth: true
+    port: 465
+    useAuth: false
     username: ""
     password: ""
-    tls: ""
-    ssl: ""
+    tls: true
+    ssl: false
     addressSender: ""
     ## @param mail.smtp.existingSecret the name of an existing secret with smtpUsername and smtpPassword keys
     ##
