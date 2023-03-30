@@ -8,17 +8,20 @@ security:
     httpOnly: true
     sameSite: "Lax"
   permanentSessionLifetime: 604800
-email:
+mail:
   addressFrom: ""
-  server: ""
-  port: ""
-  useAuth: true
-  username: ""
-  password: ""
-  tls: ""
-  ssl: ""
-  addressSender: ""
+  smtp:
+    enabled: false
+    server: ""
+    port: ""
+    useAuth: true
+    username: ""
+    password: ""
+    tls: ""
+    ssl: ""
+    addressSender: ""
   mailgun:
+    enabled: false
     apiKey: ""
     baseUrl: ""
 logFolder: ""

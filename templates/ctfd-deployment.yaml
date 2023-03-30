@@ -106,53 +106,57 @@ spec:
                 configMapKeyRef:
                   name: {{ include "ctfd.fullname" . }}
                   key: security.permanentSessionLifetime
+            {{- if or .Values.mail.smtp.enabled .Values.mail.mailgun.enabled }}
             - name: MAILFROM_ADDR
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: email.addressFrom
+                  key: mail.addressFrom
+            {{- end }}
+            {{- if .Values.mail.smtp.enabled }}
             - name: MAIL_SERVER
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: email.server
+                  key: smtp.server
             - name: MAIL_PORT
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: email.port
+                  key: smtp.port
             - name: MAIL_USEAUTH
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: email.useAuth
-            {{- if .Values.email.useAuth }}
+                  key: smtp.useAuth
+            {{- if .Values.mail.smtp.useAuth }}
             - name: MAIL_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: emailUsername
+                  key: smtpUsername
             - name: MAIL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: emailPassword
+                  key: smtpPassword
             {{- end }}
             - name: MAIL_TLS
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: email.tls
+                  key: smtp.tls
             - name: MAIL_SSL
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: email.ssl
+                  key: smtp.ssl
             - name: MAILSENDER_ADDR
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: email.addressSender
+                  key: smtp.addressSender
+            {{- end }}
             - name: MAILGUN_API_KEY
               valueFrom:
                 secretKeyRef:
@@ -162,7 +166,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "ctfd.fullname" . }}
-                  key: email.mailgun.baseUrl
+                  key: mailgun.baseUrl
             - name: LOG_FOLDER
               valueFrom:
                 configMapKeyRef:

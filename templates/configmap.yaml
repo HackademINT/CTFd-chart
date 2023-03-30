@@ -8,14 +8,19 @@ data:
   security.sessionCookie.httpOnly: {{ .Values.security.sessionCookie.httpOnly | quote }}
   security.sessionCookie.sameSite: {{ .Values.security.sessionCookie.sameSite | quote }}
   security.permanentSessionLifetime: {{ .Values.security.permanentSessionLifetime | quote }}
-  email.addressFrom: {{ .Values.email.addressFrom | quote }}
-  email.server: {{ .Values.email.server | quote }}
-  email.port: {{ .Values.email.port | quote }}
-  email.useAuth: {{ .Values.email.useAuth | quote }}
-  email.tls: {{ .Values.email.tls | quote }}
-  email.ssl: {{ .Values.email.ssl | quote }}
-  email.addressSender: {{ .Values.email.addressSender | quote }}
-  email.mailgun.baseUrl: {{ .Values.email.mailgun.baseUrl | quote }}
+  {{- if or .Values.mail.smtp.enabled .Values.mail.mailgun.enabled }}
+  mail.addressFrom: {{ .Values.mail.addressFrom | quote }}
+  {{- end }}
+  {{- if .Values.mail.smtp.enabled }}
+  smtp.server: {{ .Values.mail.smtp.server | quote }}
+  smtp.port: {{ .Values.mail.smtp.port | quote }}
+  smtp.useAuth: {{ .Values.mail.smtp.useAuth | quote }}
+  smtp.tls: {{ .Values.mail.smtp.tls | quote }}
+  smtp.ssl: {{ .Values.mail.smtp.ssl | quote }}
+  smtp.addressSender: {{ .Values.mail.smtp.addressSender | quote }}
+  {{- else if .Values.mail.mailgun.enabled }}
+  mailgun.baseUrl: {{ .Values.mail.mailgun.baseUrl | quote }}
+  {{- end }}
   logFolder: {{ .Values.logFolder | quote }}
   optional.reverseProxy: {{ .Values.optional.reverseProxy | quote }}
   optional.themeFallback: {{ .Values.optional.themeFallback | quote }}
