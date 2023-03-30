@@ -146,6 +146,16 @@ externalDatabase:
 redis:
   enabled: true
   architecture: standalone
+
+externalRedis:
+  enabled: false
+  host: "localhost"
+  port: 6379
+  user: ""
+  index: ""
+  password: ""
+  existingSecret: ""
+
 ## @section CTFd probes parameters
 ## Reference: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 ##

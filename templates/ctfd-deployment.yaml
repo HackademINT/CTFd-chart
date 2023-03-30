@@ -74,6 +74,22 @@ spec:
                   name: {{ include "ctfd.redis.redisSecretName" . | quote }}
             - name: REDIS_PORT
               value: {{ .Values.redis.master.service.ports.redis | quote }}
+            {{- else if .Values.externalRedis.enabled -}}
+            - name: REDIS_HOST
+              value: {{ .Values.externalRedis.host | quote }}
+            - name: REDIS_PROTOCOL
+              value: "redis"
+            - name: REDIS_USER
+              value: {{ .Values.externalRedis.user | quote }}
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: redis-password
+                  name: {{ include "ctfd.redis.redisSecretName" . | quote }}
+            - name: REDIS_PORT
+              value: {{ .Values.externalRedis.port | quote }}
+            - name: REDIS_DB
+              value: {{ .Values.externalRedis.index | quote }}
             {{- end }}
             - name: SESSION_COOKIE_HTTPONLY
               valueFrom:
