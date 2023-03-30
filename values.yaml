@@ -167,6 +167,15 @@ externalRedis:
   password: ""
   existingSecret: ""
 
+externalS3:
+  enabled: false
+  endpoint: s3.amazonaws.com
+  region: us-east-1
+  bucket: ctfd
+  accessKey: ""
+  secretKey: ""
+  existingSecret: ""
+
 ## @section CTFd probes parameters
 ## Reference: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 ##

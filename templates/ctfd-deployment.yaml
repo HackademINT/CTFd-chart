@@ -156,7 +156,7 @@ spec:
                 configMapKeyRef:
                   name: {{ include "ctfd.fullname" . }}
                   key: smtp.addressSender
-            {{- end }}
+            {{- else if .Values.mail.mailgun.enabled }}
             - name: MAILGUN_API_KEY
               valueFrom:
                 secretKeyRef:
@@ -167,6 +167,7 @@ spec:
                 configMapKeyRef:
                   name: {{ include "ctfd.fullname" . }}
                   key: mailgun.baseUrl
+            {{- end }}
             - name: LOG_FOLDER
               valueFrom:
                 configMapKeyRef:
@@ -235,6 +236,26 @@ spec:
                 secretKeyRef:
                   name: {{ include "ctfd.oauth.oauthSecretName" . }}
                   key: oauthClientSecret
+            {{- end }}
+            {{- if .Values.externalS3.enabled }}
+            - name: UPLOAD_PROVIDER
+              value: s3
+            - name: AWS_S3_ENDPOINT_URL
+              value: {{ .Values.externalS3.endpoint | quote }}
+            - name: AWS_S3_REGION
+              value: {{ .Values.externalS3.region | quote }}
+            - name: AWS_S3_BUCKET
+              value: {{ .Values.externalS3.bucket | quote}}
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ctfd.s3.s3SecretName" . }}
+                  key: accessKey
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ctfd.s3.s3SecretName" . }}
+                  key: secretKey
             {{- end }}
           ports:
             - name: http
