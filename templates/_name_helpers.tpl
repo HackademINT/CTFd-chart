@@ -9,7 +9,49 @@
 {{- end -}}
 
 {{/*
-  Return the database Secret Name, which contains the database password.
+  Returns the name of the secret which contains credentials to the SMTP server.
+  This will either be :
+    - The CTFd configuration secret
+    - or a user provided secret if the mail.smtp.existingSecret value is set
+*/}}
+{{- define "ctfd.smtp.smtpSecretName" -}}
+{{- if .Values.mail.smtp.existingSecret -}}
+  {{- .Values.mail.smtp.existingSecret -}}
+{{- else -}}
+  {{- include "ctfd.fullname" . }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+  Returns the name of the secret which contains the mailgun API key.
+  This will either be :
+    - The CTFd configuration secret
+    - or a user provided secret if the mail.mailgun.existingSecret value is set
+*/}}
+{{- define "ctfd.mailgun.mailgunSecretName" -}}
+{{- if .Values.mail.mailgun.existingSecret -}}
+  {{- .Values.mail.mailgun.existingSecret -}}
+{{- else -}}
+  {{- include "ctfd.fullname" . }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+  Returns the name of the secret which contains the OAuth credentials.
+  This will either be :
+    - The CTFd configuration secret
+    - or a user provided secret if the oauth.existingSecret value is set
+*/}}
+{{- define "ctfd.oauth.oauthSecretName" -}}
+{{- if .Values.oauth.existingSecret -}}
+  {{- .Values.oauth.existingSecret -}}
+{{- else -}}
+  {{- include "ctfd.fullname" . }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+  Returns the database Secret Name, which contains the database password.
   The secret may stem from different places:
     - If the MariaDB sub-chart is enabled, its secret will be used
     - Else, if an external database is enabled and an existing secret is provided, it is used
@@ -34,7 +76,7 @@
 {{- end -}}
 
 {{/*
-  Return the redis Secret Name, which contains the Redis password.
+  Returns the redis Secret Name, which contains the Redis password.
   The secret may stem from different places:
     - If the Redis sub-chart is enabled, its secret will be used
     - Else, if an external redis is enabled and an existing secret is provided, it is used

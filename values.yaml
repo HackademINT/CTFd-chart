@@ -20,10 +20,16 @@ mail:
     tls: ""
     ssl: ""
     addressSender: ""
+    ## @param mail.smtp.existingSecret the name of an existing secret with smtpUsername and smtpPassword keys
+    ##
+    existingSecret: ""
   mailgun:
     enabled: false
     apiKey: ""
     baseUrl: ""
+    ## @param mail.mailgun.existingSecret the name of an existing secret with a mailgunApiKey key
+    ##
+    existingSecret: ""
 logFolder: ""
 optional:
   reverseProxy: true
@@ -41,6 +47,7 @@ oauth:
   enabled: false
   clientId: ""
   clientSecret: ""
+  existingSecret: ""
 
 ## @section Configuration
 ## @param httpPort The http port the CTFd container listens on
