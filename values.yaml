@@ -8,19 +8,28 @@ security:
     httpOnly: true
     sameSite: "Lax"
   permanentSessionLifetime: 604800
-email:
+mail:
   addressFrom: ""
-  server: ""
-  port: ""
-  useAuth: true
-  username: ""
-  password: ""
-  tls: ""
-  ssl: ""
-  addressSender: ""
+  smtp:
+    enabled: false
+    server: ""
+    port: 465
+    useAuth: false
+    username: ""
+    password: ""
+    tls: true
+    ssl: false
+    addressSender: ""
+    ## @param mail.smtp.existingSecret the name of an existing secret with smtpUsername and smtpPassword keys
+    ##
+    existingSecret: ""
   mailgun:
+    enabled: false
     apiKey: ""
     baseUrl: ""
+    ## @param mail.mailgun.existingSecret the name of an existing secret with a mailgunApiKey key
+    ##
+    existingSecret: ""
 logFolder: ""
 optional:
   reverseProxy: true
@@ -35,8 +44,10 @@ optional:
     poolPrePing: ""
   safeMode: false
 oauth:
+  enabled: false
   clientId: ""
   clientSecret: ""
+  existingSecret: ""
 
 ## @section Configuration
 ## @param httpPort The http port the CTFd container listens on

@@ -8,33 +8,33 @@
 {{- end -}}
 {{- end -}}
 
-{{/* Email username */}}
-{{- define "ctfd.secret.email.username" -}}
+{{/* SMTP username */}}
+{{- define "ctfd.secret.smtp.username" -}}
 {{- $secret := lookup "v1" "Secret" .Release.Namespace ( include "ctfd.fullname" . ) -}}
-{{- if and $secret $secret.data.emailUsername -}}
-{{ $secret.data.emailUsername | b64dec }}
+{{- if and $secret $secret.data.smtpUsername -}}
+{{ $secret.data.smtpUsername | b64dec }}
 {{- else -}}
-{{ .Values.email.username }}
+{{ .Values.mail.smtp.username }}
 {{- end -}}
 {{- end -}}
 
-{{/* Email password */}}
-{{- define "ctfd.secret.email.password" -}}
+{{/* SMTP password */}}
+{{- define "ctfd.secret.smtp.password" -}}
 {{- $secret := lookup "v1" "Secret" .Release.Namespace ( include "ctfd.fullname" . ) -}}
-{{- if and $secret $secret.data.emailPassword -}}
-{{ $secret.data.emailPassword | b64dec }}
+{{- if and $secret $secret.data.smtpPassword -}}
+{{ $secret.data.smtpPassword | b64dec }}
 {{- else -}}
-{{ .Values.email.password }}
+{{ .Values.mail.smtp.password }}
 {{- end -}}
 {{- end -}}
 
 {{/* Mailgun API key */}}
-{{- define "ctfd.secret.email.mailgun.apiKey" -}}
+{{- define "ctfd.secret.mailgun.apiKey" -}}
 {{- $secret := lookup "v1" "Secret" .Release.Namespace ( include "ctfd.fullname" . ) -}}
 {{- if and $secret $secret.data.mailgunApiKey -}}
 {{ $secret.data.mailgunApiKey | b64dec }}
 {{- else -}}
-{{ .Values.email.mailgun.apiKey }}
+{{ .Values.mail.mailgun.apiKey }}
 {{- end -}}
 {{- end -}}
 
