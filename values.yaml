@@ -38,6 +38,7 @@ optional:
     poolPrePing: ""
   safeMode: false
 oauth:
+  enabled: false
   clientId: ""
   clientSecret: ""
 

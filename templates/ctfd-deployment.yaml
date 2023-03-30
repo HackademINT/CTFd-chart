@@ -224,6 +224,7 @@ spec:
                 configMapKeyRef:
                   name: {{ include "ctfd.fullname" . }}
                   key: optional.safeMode
+            {{- if .Values.oauth.enabled }}
             - name: OAUTH_CLIENT_ID
               valueFrom:
                 secretKeyRef:
@@ -234,6 +235,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "ctfd.fullname" . }}
                   key: oauthClientSecret
+            {{- end }}
           ports:
             - name: http
               protocol: TCP
