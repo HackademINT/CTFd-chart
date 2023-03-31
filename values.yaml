@@ -250,11 +250,19 @@ ingress:
 
 resources:
   requests:
+<<<<<<< HEAD
     memory: 200Mi
     cpu: 400m
   limits:
     memory: 512Mi
     cpu: 800m
+=======
+    memory: 256Mi
+    cpu: 100m
+  limits:
+    memory: 512Mi
+    cpu: 300m
+>>>>>>> f87b9c9 (Add HPA and resources requests and limits for the deployments)
 
 ## @section CTFd autoscaling parameters
 ##
@@ -263,8 +271,13 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 25
+<<<<<<< HEAD
   targetCPU: 65
   targetMemory: 75
+=======
+  targetCPU: 50
+  targetMemory: 65
+>>>>>>> f87b9c9 (Add HPA and resources requests and limits for the deployments)
   scaleDown:
     stabilizationWindowSeconds: 300
     periodSeconds: 15
