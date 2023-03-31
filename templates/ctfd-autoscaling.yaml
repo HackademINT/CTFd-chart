@@ -1,0 +1,57 @@
+{{- if .Values.autoscaling.enabled -}}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "ctfd.fullname" . }}
+  labels:
+    {{- include "ctfd.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "ctfd.ctfd.deployment.name" . }}
+  minReplicas: {{ .Values.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+  metrics:
+     {{- if .Values.autoscaling.targetCPU }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.targetCPU }}
+     {{- end }}
+     {{- if .Values.autoscaling.targetMemory}}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.targetMemory }}
+     {{- end }}
+  behavior:
+    {{- if .Values.autoscaling.scaleDown }}
+    scaleDown:
+      stabilizationWindowSeconds: {{ .Values.autoscaling.scaleDown.stabilizationWindowSeconds }}
+      policies:
+        - type: Percent
+          value: {{ .Values.autoscaling.scaleDown.percent }}
+          periodSeconds: {{ .Values.autoscaling.scaleDown.periodSeconds }}
+        - type: Pods
+          value: {{ .Values.autoscaling.scaleDown.pods }}
+          periodSeconds: {{ .Values.autoscaling.scaleDown.periodSeconds }}
+      selectPolicy: Max
+    {{- end }}
+    {{- if .Values.autoscaling.scaleUp }}
+    scaleUp:
+      stabilizationWindowSeconds: {{ .Values.autoscaling.scaleUp.stabilizationWindowSeconds }}
+      policies:
+        - type: Percent
+          value: {{ .Values.autoscaling.scaleUp.percent }}
+          periodSeconds: {{ .Values.autoscaling.scaleUp.periodSeconds }}
+        - type: Pods
+          value: {{ .Values.autoscaling.scaleUp.pods }}
+          periodSeconds: {{ .Values.autoscaling.scaleUp.periodSeconds }}
+      selectPolicy: Max
+    {{- end }}
+{{- end  }}

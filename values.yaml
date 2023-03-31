@@ -244,6 +244,39 @@ ingress:
   hostname: example.com
   annotations: {}
 
+
+## @section CTFd resource requests and limits
+##
+
+resources:
+  requests:
+    memory: 256Mi
+    cpu: 100m
+  limits:
+    memory: 512Mi
+    cpu: 300m
+
+## @section CTFd autoscaling parameters
+##
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 25
+  targetCPU: 50
+  targetMemory: 65
+  scaleDown:
+    stabilizationWindowSeconds: 300
+    periodSeconds: 15
+    percent: 100
+    pods: 5
+  scaleUp:
+    stabilizationWindowSeconds: 0
+    periodSeconds: 15
+    percent: 100
+    pods: 10
+
+
 ## @section Database Parameters
 ##
 
