@@ -250,11 +250,11 @@ ingress:
 
 resources:
   requests:
-    memory: 256Mi
-    cpu: 100m
+    memory: 200Mi
+    cpu: 400m
   limits:
     memory: 512Mi
-    cpu: 300m
+    cpu: 800m
 
 ## @section CTFd autoscaling parameters
 ##
@@ -263,8 +263,8 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 25
-  targetCPU: 50
-  targetMemory: 65
+  targetCPU: 65
+  targetMemory: 75
   scaleDown:
     stabilizationWindowSeconds: 300
     periodSeconds: 15
