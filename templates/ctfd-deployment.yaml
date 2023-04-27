@@ -45,7 +45,7 @@ spec:
                   name: {{ include "ctfd.maridb.databaseSecretName" . | quote }}
             {{- else if .Values.externalDatabase.enabled }}
             - name: DATABASE_PROTOCOL
-              value: "mysql+pymysql"
+              value: {{ .Values.externalDatabase.protocol | quote }}
             - name: DATABASE_HOST
               value: {{ .Values.externalDatabase.host | quote }}
             - name: DATABASE_PORT
@@ -78,7 +78,7 @@ spec:
             - name: REDIS_HOST
               value: {{ .Values.externalRedis.host | quote }}
             - name: REDIS_PROTOCOL
-              value: "redis"
+              value: {{ .Values.externalRedis.protocol | quote }}
             - name: REDIS_USER
               value: {{ .Values.externalRedis.user | quote }}
             - name: REDIS_PASSWORD

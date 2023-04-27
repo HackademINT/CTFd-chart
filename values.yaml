@@ -133,6 +133,9 @@ externalDatabase:
   ## CTFd will default to a temporary sqlite database if non is provided
   ##
   enabled: false
+  ## @param externalDatabase.protocol Protocol schema to use when connecting to the external database
+  ##
+  protocol: "mysql+pymysql"
   ## @param externalDatabase.host External Database server host
   ##
   host: "localhost"
@@ -160,6 +163,7 @@ redis:
 
 externalRedis:
   enabled: false
+  protocol: "redis"
   host: "localhost"
   port: 6379
   user: ""
