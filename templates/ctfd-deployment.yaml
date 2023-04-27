@@ -74,7 +74,7 @@ spec:
                   name: {{ include "ctfd.redis.redisSecretName" . | quote }}
             - name: REDIS_PORT
               value: {{ .Values.redis.master.service.ports.redis | quote }}
-            {{- else if .Values.externalRedis.enabled -}}
+            {{- else if .Values.externalRedis.enabled }}
             - name: REDIS_HOST
               value: {{ .Values.externalRedis.host | quote }}
             - name: REDIS_PROTOCOL
