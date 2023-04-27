@@ -79,6 +79,7 @@ service:
 ingress:
   enabled: true
   hostname: example.com
+  annotations: {}
 
 ## @section Database Parameters
 ##

@@ -5,6 +5,10 @@ metadata:
   name: {{ include "ctfd.fullname" . }}
   labels:
     {{- include "ctfd.labels" . | nindent 4 }}
+  annotations:
+    {{- if .Values.ingress.annotations }}
+    {{- include "ctfd.util.render" (dict "value" .Values.ingress.annotations "context" $) | nindent 4 }}
+    {{- end }}
 spec:
   rules:
     - host: {{ .Values.ingress.hostname | quote }}
