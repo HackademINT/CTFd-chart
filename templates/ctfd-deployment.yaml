@@ -17,10 +17,16 @@ spec:
       labels:
         {{- include "ctfd.selectorLabels" . | nindent 8 }}
     spec:
+      {{- if .Values.podSecurityContext.enabled }}
+      securityContext: {{- omit .Values.podSecurityContext "enabled" | toYaml | nindent 8 }}
+      {{- end }}
       containers:
         - name: ctfd
           image: {{ .Values.image.image | quote }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.containerSecurityContext.enabled }}
+          securityContext: {{- omit .Values.containerSecurityContext "enabled" | toYaml | nindent 12 }}
+          {{- end }}
           env:
             - name: SECRET_KEY
               valueFrom:

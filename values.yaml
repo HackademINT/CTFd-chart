@@ -181,6 +181,37 @@ externalS3:
   secretKey: ""
   existingSecret: ""
 
+## @section CTFd security contexts
+##
+
+## Configure Pods Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+## @param podSecurityContext.enabled Enabled CTFd pods' Security Context
+## @param podSecurityContext.fsGroup Set CTFd pod's Security Context fsGroup
+## @param podSecurityContext.seccompProfile.type Set CTFd container's Security Context seccomp profile
+##
+podSecurityContext:
+  enabled: true
+  fsGroup: 1001
+  seccompProfile:
+    type: "RuntimeDefault"
+
+## Configure Container Security Context (only main container)
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+## @param containerSecurityContext.enabled Enabled CTFd containers' Security Context
+## @param containerSecurityContext.runAsUser Set CTFd container's Security Context runAsUser
+## @param containerSecurityContext.runAsNonRoot Set CTFd container's Security Context runAsNonRoot
+## @param containerSecurityContext.allowPrivilegeEscalation Set CTFd container's privilege escalation
+## @param containerSecurityContext.capabilities.drop Set CTFd container's Security Context runAsNonRoot
+##
+containerSecurityContext:
+  enabled: true
+  runAsUser: 1001
+  runAsNonRoot: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+
 ## @section CTFd probes parameters
 ## Reference: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 ##
