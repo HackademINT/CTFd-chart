@@ -250,4 +250,4 @@ livenessProbe:
     path: /
     port: 'http'
   initialDelaySeconds: 10
-  periodSeconds: 3
+  periodSeconds: 60

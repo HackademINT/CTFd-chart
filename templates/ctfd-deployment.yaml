@@ -263,6 +263,8 @@ spec:
                   name: {{ include "ctfd.s3.s3SecretName" . }}
                   key: secretKey
             {{- end }}
+            - name: GUNICORN_CMD_ARGS
+              value: --timeout=0
           ports:
             - name: http
               protocol: TCP
