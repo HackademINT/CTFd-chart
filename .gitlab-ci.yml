@@ -40,8 +40,8 @@ upload to gitlab:
   stage: release
   image: curlimages/curl:latest
   script:
-    -| 
-      PACKAGE=*.tgz
+    - | 
+      PACKAGE=$(ls *.tgz);
       curl --request POST \
         --user gitlab-ci-token:$CI_JOB_TOKEN \
         --form "chart=@${PACKAGE}" \
