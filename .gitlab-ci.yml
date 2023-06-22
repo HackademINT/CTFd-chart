@@ -2,7 +2,7 @@ stages:
   - dependencies
   - lint
   - build
-  - release
+  - publish
 
 build dependencies:
   stage: dependencies
@@ -36,8 +36,8 @@ package chart:
     paths:
       - "*.tgz"
 
-upload to gitlab:
-  stage: release
+publish to gitlab packages:
+  stage: publish
   image: curlimages/curl:latest
   script:
     - |
@@ -50,8 +50,21 @@ upload to gitlab:
     - PACKAGE=$(ls *.tgz);
     - >- 
       curl --request POST 
-        --user gitlab-ci-token:$CI_JOB_TOKEN 
-        --form "chart=@${PACKAGE}" 
-        "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/api/${CHANNEL}/charts"
+      --user gitlab-ci-token:$CI_JOB_TOKEN 
+      --form "chart=@${PACKAGE}" 
+      "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/api/${CHANNEL}/charts"
   needs:
     - package chart
+
+publish to gitlab registry:
+  stage: publish
+  image: alpine/helm:3.10.1
+  script:
+    - PACKAGE=$(ls *.tgz);
+    - helm registry login ${CI_REGISTRY} -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD}
+    - helm push ${PACKAGE} oci://${CI_REGISTRY_IMAGE}
+  needs:
+    - package chart
+  only:
+    refs:
+      - main
