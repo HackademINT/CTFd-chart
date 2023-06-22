@@ -40,11 +40,18 @@ upload to gitlab:
   stage: release
   image: curlimages/curl:latest
   script:
-    - | 
-      PACKAGE=$(ls *.tgz);
-      curl --request POST \
-        --user gitlab-ci-token:$CI_JOB_TOKEN \
-        --form "chart=@${PACKAGE}" \
-        "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/api/stable/charts"
+    - |
+      if [[ "${CI_COMMIT_BRANCH}" != "${CI_DEFAULT_BRANCH}" ]];
+      then
+        CHANNEL="unstable"
+      else
+        CHANNEL="stable"
+      fi
+    - PACKAGE=$(ls *.tgz);
+    - >- 
+      curl --request POST 
+        --user gitlab-ci-token:$CI_JOB_TOKEN 
+        --form "chart=@${PACKAGE}" 
+        "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/api/${CHANNEL}/charts"
   needs:
     - package chart
