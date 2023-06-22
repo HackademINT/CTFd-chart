@@ -1,8 +1,22 @@
 stages:
-    - lint
+  - dependencies
+  - lint
+
+build dependencies:
+  stage: dependencies
+  image: alpine/helm:3.10.1
+  script:
+    - helm dependencies build
+  artifacts:
+    name: dependencies
+    paths:
+      - charts/*
+      - Chart.lock
 
 lint:
-    stage: lint
-    image: alpine/helm:3.10.1
-    script:
-        - helm lint
+  stage: lint
+  image: alpine/helm:3.10.1
+  script:
+    - helm lint
+  needs:
+    - build dependencies
