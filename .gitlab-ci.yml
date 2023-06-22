@@ -1,6 +1,8 @@
 stages:
   - dependencies
   - lint
+  - build
+  - release
 
 build dependencies:
   stage: dependencies
@@ -20,3 +22,29 @@ lint:
     - helm lint
   needs:
     - build dependencies
+
+package chart:
+  stage: build
+  image: alpine/helm:3.10.1
+  script:
+    - helm package .
+  needs:
+    - build dependencies
+    - lint
+  artifacts:
+    name: Helm package
+    paths:
+      - "*.tgz"
+
+upload to gitlab:
+  stage: release
+  image: curlimages/curl:latest
+  script:
+    -| 
+      PACKAGE=*.tgz
+      curl --request POST \
+        --user gitlab-ci-token:$CI_JOB_TOKEN \
+        --form "chart=@${PACKAGE}" \
+        "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/api/stable/charts"
+  needs:
+    - package chart

@@ -4,3 +4,6 @@
 # Dependency files
 charts/*
 Chart.lock
+
+# Built charts
+*.tgz
