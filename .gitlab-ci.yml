@@ -68,3 +68,16 @@ publish to gitlab registry:
   only:
     refs:
       - main
+
+publish to docker hub:
+  stage: publish
+  image: alpine/helm:3.10.1
+  script:
+    - PACKAGE=$(ls *.tgz);
+    - echo ${DOCKER_HUB_TOKEN} | helm registry login registry-1.docker.io -u hackademint --password-stdin
+    - helm push ${PACKAGE} oci://registry-1.docker.io/hackademint
+  needs:
+    - package chart
+  only:
+    refs:
+      - main
