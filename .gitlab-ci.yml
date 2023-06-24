@@ -66,8 +66,7 @@ publish to gitlab registry:
   needs:
     - package chart
   only:
-    refs:
-      - main
+    - tags
 
 publish to docker hub:
   stage: publish
@@ -79,5 +78,4 @@ publish to docker hub:
   needs:
     - package chart
   only:
-    refs:
-      - main
+    - tags
