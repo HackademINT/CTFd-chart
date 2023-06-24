@@ -1,6 +1,7 @@
 stages:
   - dependencies
   - lint
+  - update
   - build
   - publish
 
@@ -22,6 +23,19 @@ lint:
     - helm lint
   needs:
     - build dependencies
+
+update readme:
+  stage: update
+  image: alpine
+  before_script:
+    - apk update
+    - apk add git npm
+    - npm install -g @bitnami/readme-generator-for-helm
+  script:
+    - readme-generator --values values.yaml --readme Readme.md --schema "/tmp/schema.json"
+  after_script:
+    - cat Readme.md
+  needs: []
 
 package chart:
   stage: build
