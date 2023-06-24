@@ -29,13 +29,27 @@ update readme:
   image: alpine
   before_script:
     - apk update
-    - apk add git npm
+    - apk add git npm openssh-client
     - npm install -g @bitnami/readme-generator-for-helm
+    - git config --global user.name "HackademINT CI"
+    - git config --global user.email "ci@hackademint.org"
+    - mkdir -p ~/.ssh
+    - mv ${CI_PUSH_KEY} ~/.ssh/id_ecdsa
+    - chmod 600 ~/.ssh/id_ecdsa
+    - ssh-keyscan -p ${CI_SERVER_SHELL_SSH_PORT} ${CI_SERVER_SHELL_SSH_HOST} >> ~/.ssh/known_hosts
+    - git clone "ssh://git@${CI_SERVER_SHELL_SSH_HOST}:${CI_SERVER_SHELL_SSH_PORT}/${CI_PROJECT_PATH}.git" "${CI_COMMIT_SHA}"
   script:
+    - cd ${CI_COMMIT_SHA}
+    - git switch ${CI_COMMIT_BRANCH}
     - readme-generator --values values.yaml --readme Readme.md --schema "/tmp/schema.json"
-  after_script:
-    - cat Readme.md
-  needs: []
+    - git add Readme.md
+    - 'git commit -m "CI bot: Update Readme.md from values.yaml"'
+    - git push
+  needs:
+    - lint
+  only:
+    changes:
+      - values.yaml
 
 package chart:
   stage: build
@@ -69,6 +83,9 @@ publish to gitlab packages:
       "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/api/${CHANNEL}/charts"
   needs:
     - package chart
+  except:
+    changes:
+      - values.yaml
 
 publish to gitlab registry:
   stage: publish
@@ -81,6 +98,9 @@ publish to gitlab registry:
     - package chart
   only:
     - tags
+  except:
+    changes:
+      - values.yaml
 
 publish to docker hub:
   stage: publish
@@ -93,3 +113,6 @@ publish to docker hub:
     - package chart
   only:
     - tags
+  except:
+    changes:
+      - values.yaml
