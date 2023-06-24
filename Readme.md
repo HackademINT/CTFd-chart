@@ -15,3 +15,5 @@ While this chart can, and has been used in production successfully, it is still 
 ```console
 helm install my-release oci://registry-1.docker.io/hackademint/ctfd
 ```
+
+## Parameters

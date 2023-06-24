@@ -3,67 +3,128 @@
 ## Official documentation : https://docs.ctfd.io/docs/deployment/configuration
 ##
 
+## @param security.sessionCookie.httpOnly whether to set the HttpOnly flag for session cookies
+## @param security.sessionCookie.sameSite the value to use for the SameSite parameter of session cookies
+## @param security.permanentSessionLifetime the flask session lifetime, in seconds
+##
 security:
   sessionCookie:
     httpOnly: true
     sameSite: "Lax"
   permanentSessionLifetime: 604800
+
 mail:
+  ## @param mail.addressFrom SMTP FROM field value
+  ##
   addressFrom: ""
   smtp:
+    ## @param mail.smtp.enabled whether to send emails at all
+    ##
     enabled: false
+    ## @param mail.smtp.server SMTP server address
+    ##
     server: ""
+    ## @param mail.smtp.port SMTP server port
+    ##
     port: 465
+    ## @param mail.smtp.useAuth whether to use authentication with the SMTP server
+    ##
     useAuth: false
+    ## @param mail.smtp.username the username to use for SMTP authentication
+    ##
     username: ""
+    ## @param mail.smtp.password the password to use for SMTP authentication
+    ##
     password: ""
+    ## @param mail.smtp.tls whether to use tls when communicating with the SMTP server
+    ##
     tls: true
+    ## @param mail.smtp.ssl whether to use ssl when communicating with the SMTP server
+    ##
     ssl: false
+    ## @param mail.smtp.addressSender SMTP SENDER field value
+    ##
     addressSender: ""
     ## @param mail.smtp.existingSecret the name of an existing secret with smtpUsername and smtpPassword keys
     ##
     existingSecret: ""
   mailgun:
+    ## @param mail.mailgun.enabled whether to use the mailgun API to send emails
+    ##
     enabled: false
+    ## @param mail.mailgun.apiKey an API key for mailgun
+    ##
     apiKey: ""
+    ## @param mail.mailgun.baseUrl base url for the mailgun API
+    ##
     baseUrl: ""
     ## @param mail.mailgun.existingSecret the name of an existing secret with a mailgunApiKey key
     ##
     existingSecret: ""
+
+## @param logFolder a folder where CTFd should store logs for submissions, registrations and logins
+##
 logFolder: ""
+
 optional:
+  ## @param optional.reverseProxy whether CTFd should trust X-Forwarded headers. Checkout the CTFd documentation for more information.
+  ##
   reverseProxy: true
+  ## @param optional.themeFallback whether CTFd should fallback to the core theme for missing resources
+  ##
   themeFallback: true
+  ## @param optional.swaggerUi whether to enable the swagger endpoint at /api/v1
+  ##
   swaggerUi: false
+  ## @param optional.updateCheck whether to check for updates
+  ##
   updateCheck: true
+  ## @param optional.serverSentEvents whether to use server sent event notifications
+  ##
   serverSentEvents: true
+  ## @param optional.htmlSanitization whether CTFd should sanitize html content
+  ##
   htmlSanitization: false
+  ## @param optional.sqlAlchemy.trackModifications leave disabled to save memory
+  ## @param optional.sqlAlchemy.maxOverflow SqlAlchemy max overflow engine setting
+  ## @param optional.sqlAlchemy.poolPrePing SqlAlchemy pool pre ping engine setting
+  ##
   sqlAlchemy:
     trackModifications: false
     maxOverflow: ""
     poolPrePing: ""
+  ## @param optional.safeMode if enabled, CTFd will not load any plugins
   safeMode: false
+
+## @param oauth.enabled whether to enable MajorLeagueCyber integration
+## @param oauth.clientId MajorLeagueCyber oauth client ID
+## @param oauth.clientSecret MajorLeagueCyber oauth client secret
+## @param oauth.existingSecret name of a secret containing the MajorLeagueCyber oauth client secret
 oauth:
   enabled: false
   clientId: ""
   clientSecret: ""
-  existingSecret: ""
+  existingSecret: "" #TODO actually use this
 
-## @section Configuration
-## @param httpPort The http port the CTFd container listens on
-httpPort: 8000
 
-## @section CTFd image parameters
+## @section CTFd deployment parameters
 ##
 
+## @param image.image full container image path for the CTFd deployment
+## @param image.pullSecret a pull secret name for the CTFd image
+## @param image.pullPolicy CTFd image pull policy
+##
 image:
   image: "ghcr.io/ctfd/ctfd:3.5.1"
   pullSecret: ""
   pullPolicy: IfNotPresent
 
-## @section CTFd deployment parameters
+## @param httpPort The http port the CTFd container listens on
 ##
+httpPort: 8000
 
+## @param replicaCount number of replicas for the CTFd deployment
+##
 replicaCount: 1
 
 ## @param command Override default container command (useful when using custom images)
@@ -88,13 +149,20 @@ extraEnvVarsSecret: ""
 ## @section CTFd service parameters
 ##
 
+## @section CTFd service parameters
+##
+## @param service.type service type
+## @param service.port service port
+##
 service:
   type: ClusterIP
   port: 80
 
 ## @section CTFd ingress parameters
 ##
-
+## @param ingress.enabled whether to enable the CTFd ingress
+## @param ingress.hostname the ingress hostname
+## @param ingress.annotations [object] annotation to add to the ingress resource
 ingress:
   enabled: true
   hostname: example.com
@@ -116,16 +184,13 @@ mariadb:
   ##
   architecture: standalone
   ## MariaDB Authentication parameters. If passwords are not provided, they will be generated randomly.
-  ## @param mariadb.auth.rootPassword MariaDB root password
   ## @param mariadb.auth.database MariaDB custom database
   ## @param mariadb.auth.username MariaDB custom username
-  ## @param mariadb.auth.password MariaDB custom user password
   ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mariadb#setting-the-root-password-on-first-run
   ##      https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-on-first-run
   ##      https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-user-on-first-run
   ##
   auth:
-    createDatabase: true
     database: "ctfd"
     username: "ctfd"
   ## MariaDB Primary configuration
@@ -177,27 +242,68 @@ externalDatabase:
   ##
   existingSecret: ""
 
+## @section Redis cache parameters
+##
+
 redis:
+  ## @param redis.enabled Deploy a Redis server to satisfy the applications caching requirements
+  ## To use an external cache set this to false and configure the `externalRedis.*` parameters
+  ## If neither this nor `externalRedis.enabled` is set, CTFd will use its internal file-based cache.
+  ##
   enabled: true
+  ## @param redis.architecture Redis chart architecture option
+  ##
   architecture: standalone
 
 externalRedis:
+  ## @param externalRedis.enabled whether to use an external redis instance
+  ##
   enabled: false
+  ## @param externalRedis.protocol the redis protocol scheme to use
+  ##
   protocol: "redis"
+  ## @param externalRedis.host the redis host to connect to
+  ##
   host: "localhost"
+  ## @param externalRedis.port the redis port to connect to
+  ##
   port: 6379
+  ## @param externalRedis.user the redis user to use for authentication
+  ##
   user: ""
+  ## @param externalRedis.index the redis index (database) to use
+  ##
   index: ""
+  ## @param externalRedis.password the redis password to use for authentication
+  ##
   password: ""
+  ## @param externalRedis.existingSecret the name of an existing secret containing a redis-password key
+  ##
   existingSecret: ""
 
+## @section S3 parameters
+##
 externalS3:
+  ## @param externalS3.enabled whether to use an external S3 endpoint to store uploads
+  ##
   enabled: false
+  ## @param externalS3.endpoint the S3 endpoint to use
+  ##
   endpoint: s3.amazonaws.com
+  ## @param externalS3.region the S3 region to use
+  ##
   region: us-east-1
+  ## @param externalS3.bucket the S3 bucket name to use to store uploads
+  ##
   bucket: ctfd
+  ## @param externalS3.accessKey the S3 access key
+  ##
   accessKey: ""
+  ## @param externalS3.secretKey the S3 secret key
+  ##
   secretKey: ""
+  ## @param externalS3.existingSecret the name of an existing secret containing a accessKey and secretKey keys
+  ##
   existingSecret: ""
 
 ## @section CTFd security contexts
@@ -236,8 +342,11 @@ containerSecurityContext:
 ##
 
 ## Startup probe parameters
-## @param enabled whether to enable the probe
-## Other parameters are interpreted as the probe's YAML template
+## @extra startupProbe a template for the startup probe
+## @param startupProbe.enabled whether to enable the probe
+## @skip startupProbe.httpGet
+## @skip startupProbe.initialDelaySeconds
+## @skip startupProbe.periodSeconds
 ##
 startupProbe:
   enabled: false
@@ -248,8 +357,11 @@ startupProbe:
   periodSeconds: 3
 
 ## Readiness probe parameters
-## @param enabled whether to enable the probe
-## Other parameters are interpreted as the probe's YAML template
+## @extra startupProbe a template for the startup probe
+## @param readinessProbe.enabled whether to enable the probe
+## @skip readinessProbe.httpGet
+## @skip readinessProbe.initialDelaySeconds
+## @skip readinessProbe.periodSeconds
 ##
 readinessProbe:
   enabled: true
@@ -260,8 +372,11 @@ readinessProbe:
   periodSeconds: 3
 
 ## Liveness probe parameters
-## @param enabled whether to enable the probe
-## Other parameters are interpreted as the probe's YAML template
+## @extra livenessProbe a template for the startup probe
+## @param livenessProbe.enabled whether to enable the probe
+## @skip livenessProbe.httpGet
+## @skip livenessProbe.initialDelaySeconds
+## @skip livenessProbe.periodSeconds
 ##
 livenessProbe:
   enabled: true
