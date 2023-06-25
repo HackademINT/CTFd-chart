@@ -107,7 +107,7 @@ oauth:
   existingSecret: "" #TODO actually use this
 
 
-## @section CTFd deployment parameters
+## @section CTFd deployment basic parameters
 ##
 
 ## @param image.image full container image path for the CTFd deployment
@@ -146,8 +146,86 @@ extraEnvVarsCM: ""
 ## @param extraEnvVarsSecret Name of existing Secret containing extra env vars
 ##
 extraEnvVarsSecret: ""
-## @section CTFd service parameters
+
+## @section CTFd deployment security contexts
 ##
+
+## Configure Pods Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+## @param podSecurityContext.enabled Enabled CTFd pods' Security Context
+## @param podSecurityContext.fsGroup Set CTFd pod's Security Context fsGroup
+## @param podSecurityContext.seccompProfile.type Set CTFd container's Security Context seccomp profile
+##
+podSecurityContext:
+  enabled: true
+  fsGroup: 1001
+  seccompProfile:
+    type: "RuntimeDefault"
+
+## Configure Container Security Context (only main container)
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+## @param containerSecurityContext.enabled Enabled CTFd containers' Security Context
+## @param containerSecurityContext.runAsUser Set CTFd container's Security Context runAsUser
+## @param containerSecurityContext.runAsNonRoot Set CTFd container's Security Context runAsNonRoot
+## @param containerSecurityContext.allowPrivilegeEscalation Set CTFd container's privilege escalation
+## @param containerSecurityContext.capabilities.drop Set CTFd container's Security Context runAsNonRoot
+##
+containerSecurityContext:
+  enabled: true
+  runAsUser: 1001
+  runAsNonRoot: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+
+## @section CTFd deployment probes parameters
+## Reference: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+##
+
+## Startup probe parameters
+## @extra startupProbe a template for the startup probe
+## @param startupProbe.enabled whether to enable the probe
+## @skip startupProbe.httpGet
+## @skip startupProbe.initialDelaySeconds
+## @skip startupProbe.periodSeconds
+##
+startupProbe:
+  enabled: false
+  httpGet:
+    path: /
+    port: 'http'
+  initialDelaySeconds: 5
+  periodSeconds: 3
+
+## Readiness probe parameters
+## @extra startupProbe a template for the startup probe
+## @param readinessProbe.enabled whether to enable the probe
+## @skip readinessProbe.httpGet
+## @skip readinessProbe.initialDelaySeconds
+## @skip readinessProbe.periodSeconds
+##
+readinessProbe:
+  enabled: true
+  httpGet:
+    path: /
+    port: 'http'
+  initialDelaySeconds: 10
+  periodSeconds: 3
+
+## Liveness probe parameters
+## @extra livenessProbe a template for the startup probe
+## @param livenessProbe.enabled whether to enable the probe
+## @skip livenessProbe.httpGet
+## @skip livenessProbe.initialDelaySeconds
+## @skip livenessProbe.periodSeconds
+##
+livenessProbe:
+  enabled: true
+  httpGet:
+    path: /
+    port: 'http'
+  initialDelaySeconds: 10
+  periodSeconds: 60
 
 ## @section CTFd service parameters
 ##
@@ -306,82 +384,3 @@ externalS3:
   ##
   existingSecret: ""
 
-## @section CTFd security contexts
-##
-
-## Configure Pods Security Context
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-## @param podSecurityContext.enabled Enabled CTFd pods' Security Context
-## @param podSecurityContext.fsGroup Set CTFd pod's Security Context fsGroup
-## @param podSecurityContext.seccompProfile.type Set CTFd container's Security Context seccomp profile
-##
-podSecurityContext:
-  enabled: true
-  fsGroup: 1001
-  seccompProfile:
-    type: "RuntimeDefault"
-
-## Configure Container Security Context (only main container)
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-## @param containerSecurityContext.enabled Enabled CTFd containers' Security Context
-## @param containerSecurityContext.runAsUser Set CTFd container's Security Context runAsUser
-## @param containerSecurityContext.runAsNonRoot Set CTFd container's Security Context runAsNonRoot
-## @param containerSecurityContext.allowPrivilegeEscalation Set CTFd container's privilege escalation
-## @param containerSecurityContext.capabilities.drop Set CTFd container's Security Context runAsNonRoot
-##
-containerSecurityContext:
-  enabled: true
-  runAsUser: 1001
-  runAsNonRoot: true
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop: ["ALL"]
-
-## @section CTFd probes parameters
-## Reference: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-##
-
-## Startup probe parameters
-## @extra startupProbe a template for the startup probe
-## @param startupProbe.enabled whether to enable the probe
-## @skip startupProbe.httpGet
-## @skip startupProbe.initialDelaySeconds
-## @skip startupProbe.periodSeconds
-##
-startupProbe:
-  enabled: false
-  httpGet:
-    path: /
-    port: 'http'
-  initialDelaySeconds: 5
-  periodSeconds: 3
-
-## Readiness probe parameters
-## @extra startupProbe a template for the startup probe
-## @param readinessProbe.enabled whether to enable the probe
-## @skip readinessProbe.httpGet
-## @skip readinessProbe.initialDelaySeconds
-## @skip readinessProbe.periodSeconds
-##
-readinessProbe:
-  enabled: true
-  httpGet:
-    path: /
-    port: 'http'
-  initialDelaySeconds: 10
-  periodSeconds: 3
-
-## Liveness probe parameters
-## @extra livenessProbe a template for the startup probe
-## @param livenessProbe.enabled whether to enable the probe
-## @skip livenessProbe.httpGet
-## @skip livenessProbe.initialDelaySeconds
-## @skip livenessProbe.periodSeconds
-##
-livenessProbe:
-  enabled: true
-  httpGet:
-    path: /
-    port: 'http'
-  initialDelaySeconds: 10
-  periodSeconds: 60
