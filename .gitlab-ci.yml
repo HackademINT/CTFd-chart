@@ -24,6 +24,20 @@ lint:
   needs:
     - build dependencies
 
+verify values.yaml annotations:
+  stage: lint
+  image: alpine/helm:3.10.1
+  before_script:
+    - apk update
+    - apk add npm
+    - npm install -g @bitnami/readme-generator-for-helm
+  script:
+    - readme-generator --values values.yaml --readme Readme.md --schema "/tmp/schema.json"
+  needs: []
+  except:
+    changes:
+      - values.yaml # If it has changed, we will push the updated Readme instead
+
 update readme:
   stage: update
   image: alpine
