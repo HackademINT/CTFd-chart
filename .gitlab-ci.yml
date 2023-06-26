@@ -32,7 +32,7 @@ verify values.yaml annotations:
     - apk add npm
     - npm install -g @bitnami/readme-generator-for-helm
   script:
-    - readme-generator --values values.yaml --readme Readme.md --schema "/tmp/schema.json"
+    - readme-generator --values values.yaml --readme README.md --schema "/tmp/schema.json"
   needs: []
   rules:
     - changes:
@@ -56,14 +56,14 @@ update readme:
   script:
     - cd ${CI_COMMIT_SHA}
     - git switch ${CI_COMMIT_BRANCH}
-    - readme-generator --values values.yaml --readme Readme.md --schema "/tmp/schema.json"
+    - readme-generator --values values.yaml --readme README.md --schema "/tmp/schema.json"
     - |-
       CHANGES=$(git status --porcelain | wc -l)
       if [ "$CHANGES" -gt "0" ]
         then
-          git add Readme.md
+          git add README.md
           git status
-          git commit -m "CI bot: Update Readme.md from values.yaml"
+          git commit -m "CI bot: Update README.md from values.yaml"
           git push
         else
           echo "No changes to commit, triggering another job"
