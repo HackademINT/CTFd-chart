@@ -71,7 +71,7 @@ update readme:
                --fail \
                --form token=${FAILED_PUSH_PIPELINE_TRIGGER} \
                --form ref=${CI_COMMIT_REF_NAME} \
-               "${CI_SERVER_URL}/api/v4/projects/${CI_PROJECT_ID}/trigger/pipeline"
+               "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/trigger/pipeline"
       fi
   needs:
     - lint
@@ -110,9 +110,9 @@ publish to gitlab packages:
     - PACKAGE=$(ls *.tgz);
     - >- 
       curl --request POST 
-        --user gitlab-ci-token:$CI_JOB_TOKEN 
-        --form "chart=@${PACKAGE}" 
-        "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/api/${CHANNEL}/charts"
+      --user gitlab-ci-token:$CI_JOB_TOKEN 
+      --form "chart=@${PACKAGE}" 
+      "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/api/${CHANNEL}/charts"
   needs:
     - package chart
   rules:
