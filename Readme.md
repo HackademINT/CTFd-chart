@@ -20,51 +20,51 @@ helm install my-release oci://registry-1.docker.io/hackademint/ctfd
 
 ### CTFd configuration parameters
 
-| Name                                     | Description                                                                                          | Value    |
-| ---------------------------------------- | ---------------------------------------------------------------------------------------------------- | -------- |
-| `security.sessionCookie.httpOnly`        | whether to set the HttpOnly flag for session cookies                                                 | `true`   |
-| `security.sessionCookie.sameSite`        | the value to use for the SameSite parameter of session cookies                                       | `Lax`    |
-| `security.permanentSessionLifetime`      | the flask session lifetime, in seconds                                                               | `604800` |
-| `mail.addressFrom`                       | SMTP FROM field value                                                                                | `""`     |
-| `mail.smtp.enabled`                      | whether to send emails at all                                                                        | `false`  |
-| `mail.smtp.server`                       | SMTP server address                                                                                  | `""`     |
-| `mail.smtp.port`                         | SMTP server port                                                                                     | `465`    |
-| `mail.smtp.useAuth`                      | whether to use authentication with the SMTP server                                                   | `false`  |
-| `mail.smtp.username`                     | the username to use for SMTP authentication                                                          | `""`     |
-| `mail.smtp.password`                     | the password to use for SMTP authentication                                                          | `""`     |
-| `mail.smtp.tls`                          | whether to use tls when communicating with the SMTP server                                           | `true`   |
-| `mail.smtp.ssl`                          | whether to use ssl when communicating with the SMTP server                                           | `false`  |
-| `mail.smtp.addressSender`                | SMTP SENDER field value                                                                              | `""`     |
-| `mail.smtp.existingSecret`               | the name of an existing secret with smtpUsername and smtpPassword keys                               | `""`     |
-| `mail.mailgun.enabled`                   | whether to use the mailgun API to send emails                                                        | `false`  |
-| `mail.mailgun.apiKey`                    | an API key for mailgun                                                                               | `""`     |
-| `mail.mailgun.baseUrl`                   | base url for the mailgun API                                                                         | `""`     |
-| `mail.mailgun.existingSecret`            | the name of an existing secret with a mailgunApiKey key                                              | `""`     |
-| `logFolder`                              | a folder where CTFd should store logs for submissions, registrations and logins                      | `""`     |
-| `optional.reverseProxy`                  | whether CTFd should trust X-Forwarded headers. Checkout the CTFd documentation for more information. | `true`   |
-| `optional.themeFallback`                 | whether CTFd should fallback to the core theme for missing resources                                 | `true`   |
-| `optional.swaggerUi`                     | whether to enable the swagger endpoint at /api/v1                                                    | `false`  |
-| `optional.updateCheck`                   | whether to check for updates                                                                         | `true`   |
-| `optional.serverSentEvents`              | whether to use server sent event notifications                                                       | `true`   |
-| `optional.htmlSanitization`              | whether CTFd should sanitize html content                                                            | `false`  |
-| `optional.sqlAlchemy.trackModifications` | leave disabled to save memory                                                                        | `false`  |
-| `optional.sqlAlchemy.maxOverflow`        | SqlAlchemy max overflow engine setting                                                               | `""`     |
-| `optional.sqlAlchemy.poolPrePing`        | SqlAlchemy pool pre ping engine setting                                                              | `""`     |
-| `optional.safeMode`                      | if enabled, CTFd will not load any plugins                                                           | `false`  |
-| `oauth.enabled`                          | whether to enable MajorLeagueCyber integration                                                       | `false`  |
-| `oauth.clientId`                         | MajorLeagueCyber oauth client ID                                                                     | `""`     |
-| `oauth.clientSecret`                     | MajorLeagueCyber oauth client secret                                                                 | `""`     |
-| `oauth.existingSecret`                   | name of a secret containing the MajorLeagueCyber oauth client secret                                 | `""`     |
+| Name                                     | Description                                                                                                             | Value                 |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `security.sessionCookie.httpOnly`        | Value of the HttpOnly flag for session cookies                                                                          | `true`                |
+| `security.sessionCookie.sameSite`        | Value of the SameSite parameter of session cookies                                                                      | `Lax`                 |
+| `security.permanentSessionLifetime`      | The Flask session lifetime, in seconds                                                                                  | `604800`              |
+| `mail.addressFrom`                       | A source address for sent emails                                                                                        | `noreply@example.com` |
+| `mail.smtp.enabled`                      | Enable to send emails through an SMTP server                                                                            | `false`               |
+| `mail.smtp.server`                       | Address of the SMTP server                                                                                              | `""`                  |
+| `mail.smtp.port`                         | Port of the SMTP                                                                                                        | `465`                 |
+| `mail.smtp.useAuth`                      | Whether CTFd should authenticate to the SMTP server                                                                     | `false`               |
+| `mail.smtp.username`                     | SMTP username for authentication                                                                                        | `""`                  |
+| `mail.smtp.password`                     | SMTP password for authentication                                                                                        | `""`                  |
+| `mail.smtp.tls`                          | Use TLS to communicate with the SMTP server                                                                             | `true`                |
+| `mail.smtp.ssl`                          | Use SSL to communicate with the SMTP server                                                                             | `false`               |
+| `mail.smtp.addressSender`                | SMTP SENDER field value                                                                                                 | `""`                  |
+| `mail.smtp.existingSecret`               | Name of an existing secret with smtpUsername and smtpPassword keys                                                      | `""`                  |
+| `mail.mailgun.enabled`                   | Enable to send emails through a mailgun API                                                                             | `false`               |
+| `mail.mailgun.apiKey`                    | A mailgun API key                                                                                                       | `""`                  |
+| `mail.mailgun.baseUrl`                   | Base url for the mailgun API                                                                                            | `""`                  |
+| `mail.mailgun.existingSecret`            | Name of an existing secret with a mailgunApiKey key                                                                     | `""`                  |
+| `logFolder`                              | A folder where CTFd should store logs for submissions, registrations and logins                                         | `""`                  |
+| `optional.reverseProxy`                  | Whether CTFd should trust X-Forwarded headers. Checkout the CTFd documentation for more details on the possible values. | `true`                |
+| `optional.themeFallback`                 | Whether CTFd should fallback to the core theme for missing resources                                                    | `true`                |
+| `optional.swaggerUi`                     | Whether to enable the swagger endpoint at /api/v1                                                                       | `false`               |
+| `optional.updateCheck`                   | Whether to check for updates                                                                                            | `true`                |
+| `optional.serverSentEvents`              | Whether to use server sent event notifications                                                                          | `true`                |
+| `optional.htmlSanitization`              | Whether CTFd should sanitize html content                                                                               | `false`               |
+| `optional.sqlAlchemy.trackModifications` | Leave disabled to save memory                                                                                           | `false`               |
+| `optional.sqlAlchemy.maxOverflow`        | SqlAlchemy max overflow engine setting                                                                                  | `""`                  |
+| `optional.sqlAlchemy.poolPrePing`        | SqlAlchemy pool pre ping engine setting                                                                                 | `""`                  |
+| `optional.safeMode`                      | If enabled, CTFd will not load any plugins                                                                              | `false`               |
+| `oauth.enabled`                          | Whether to enable MajorLeagueCyber integration                                                                          | `false`               |
+| `oauth.clientId`                         | MajorLeagueCyber oauth client ID                                                                                        | `""`                  |
+| `oauth.clientSecret`                     | MajorLeagueCyber oauth client secret                                                                                    | `""`                  |
+| `oauth.existingSecret`                   | Name of a secret containing the MajorLeagueCyber oauth client secret                                                    | `""`                  |
 
 ### CTFd deployment basic parameters
 
 | Name                 | Description                                                          | Value                     |
 | -------------------- | -------------------------------------------------------------------- | ------------------------- |
-| `image.image`        | full container image path for the CTFd deployment                    | `ghcr.io/ctfd/ctfd:3.5.1` |
-| `image.pullSecret`   | a pull secret name for the CTFd image                                | `""`                      |
+| `image.image`        | Full container image path for the CTFd deployment                    | `ghcr.io/ctfd/ctfd:3.5.1` |
+| `image.pullSecret`   | A pull secret name for the CTFd image                                | `""`                      |
 | `image.pullPolicy`   | CTFd image pull policy                                               | `IfNotPresent`            |
 | `httpPort`           | The http port the CTFd container listens on                          | `8000`                    |
-| `replicaCount`       | number of replicas for the CTFd deployment                           | `1`                       |
+| `replicaCount`       | Number of replicas for the CTFd deployment                           | `1`                       |
 | `command`            | Override default container command (useful when using custom images) | `[]`                      |
 | `args`               | Override default container args (useful when using custom images)    | `[]`                      |
 | `extraEnvVars`       | Array with extra environment variables to add to the CTFd container  | `[]`                      |
@@ -89,25 +89,25 @@ helm install my-release oci://registry-1.docker.io/hackademint/ctfd
 | Name                     | Description                      | Value   |
 | ------------------------ | -------------------------------- | ------- |
 | `startupProbe`           | a template for the startup probe |         |
-| `startupProbe.enabled`   | whether to enable the probe      | `false` |
+| `startupProbe.enabled`   | Whether to enable the probe      | `false` |
 | `startupProbe`           | a template for the startup probe |         |
-| `readinessProbe.enabled` | whether to enable the probe      | `true`  |
+| `readinessProbe.enabled` | Whether to enable the probe      | `true`  |
 | `livenessProbe`          | a template for the startup probe |         |
-| `livenessProbe.enabled`  | whether to enable the probe      | `true`  |
+| `livenessProbe.enabled`  | Whether to enable the probe      | `true`  |
 
 ### CTFd service parameters
 
-| Name           | Description  | Value       |
-| -------------- | ------------ | ----------- |
-| `service.type` | service type | `ClusterIP` |
-| `service.port` | service port | `80`        |
+| Name           | Description             | Value       |
+| -------------- | ----------------------- | ----------- |
+| `service.type` | Kubernetes service type | `ClusterIP` |
+| `service.port` | Service port            | `80`        |
 
 ### CTFd ingress parameters
 
 | Name                  | Description                               | Value         |
 | --------------------- | ----------------------------------------- | ------------- |
-| `ingress.enabled`     | whether to enable the CTFd ingress        | `true`        |
-| `ingress.hostname`    | the ingress hostname                      | `example.com` |
+| `ingress.enabled`     | Whether to enable the CTFd ingress        | `true`        |
+| `ingress.hostname`    | Ingress hostname                          | `example.com` |
 | `ingress.annotations` | annotation to add to the ingress resource | `{}`          |
 
 ### Database Parameters
@@ -137,23 +137,23 @@ helm install my-release oci://registry-1.docker.io/hackademint/ctfd
 | ------------------------------ | ---------------------------------------------------------------------- | ------------ |
 | `redis.enabled`                | Deploy a Redis server to satisfy the applications caching requirements | `true`       |
 | `redis.architecture`           | Redis chart architecture option                                        | `standalone` |
-| `externalRedis.enabled`        | whether to use an external redis instance                              | `false`      |
-| `externalRedis.protocol`       | the redis protocol scheme to use                                       | `redis`      |
-| `externalRedis.host`           | the redis host to connect to                                           | `localhost`  |
-| `externalRedis.port`           | the redis port to connect to                                           | `6379`       |
-| `externalRedis.user`           | the redis user to use for authentication                               | `""`         |
-| `externalRedis.index`          | the redis index (database) to use                                      | `""`         |
-| `externalRedis.password`       | the redis password to use for authentication                           | `""`         |
-| `externalRedis.existingSecret` | the name of an existing secret containing a redis-password key         | `""`         |
+| `externalRedis.enabled`        | Whether to use an external redis instance                              | `false`      |
+| `externalRedis.protocol`       | Redis protocol scheme to use                                           | `redis`      |
+| `externalRedis.host`           | External Redis server host                                             | `localhost`  |
+| `externalRedis.port`           | External Redis server port                                             | `6379`       |
+| `externalRedis.user`           | External Redis user                                                    | `""`         |
+| `externalRedis.index`          | External Redis index (database)                                        | `""`         |
+| `externalRedis.password`       | External Redis password                                                | `""`         |
+| `externalRedis.existingSecret` | Name of an existing secret containing a redis-password key             | `""`         |
 
 ### S3 parameters
 
-| Name                        | Description                                                              | Value              |
-| --------------------------- | ------------------------------------------------------------------------ | ------------------ |
-| `externalS3.enabled`        | whether to use an external S3 endpoint to store uploads                  | `false`            |
-| `externalS3.endpoint`       | the S3 endpoint to use                                                   | `s3.amazonaws.com` |
-| `externalS3.region`         | the S3 region to use                                                     | `us-east-1`        |
-| `externalS3.bucket`         | the S3 bucket name to use to store uploads                               | `ctfd`             |
-| `externalS3.accessKey`      | the S3 access key                                                        | `""`               |
-| `externalS3.secretKey`      | the S3 secret key                                                        | `""`               |
-| `externalS3.existingSecret` | the name of an existing secret containing a accessKey and secretKey keys | `""`               |
+| Name                        | Description                                                          | Value              |
+| --------------------------- | -------------------------------------------------------------------- | ------------------ |
+| `externalS3.enabled`        | Whether to use an external S3 endpoint to store uploads              | `false`            |
+| `externalS3.endpoint`       | External S3 API endpoint host                                        | `s3.amazonaws.com` |
+| `externalS3.region`         | External S3 API region                                               | `us-east-1`        |
+| `externalS3.bucket`         | External S3 bucket name                                              | `ctfd`             |
+| `externalS3.accessKey`      | External S3 API access key                                           | `""`               |
+| `externalS3.secretKey`      | External S3 API secret key                                           | `""`               |
+| `externalS3.existingSecret` | Name of an existing secret containing a accessKey and secretKey keys | `""`               |
