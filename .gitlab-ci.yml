@@ -44,7 +44,7 @@ update readme:
   image: alpine
   before_script:
     - apk update
-    - apk add git npm openssh-client
+    - apk add git npm openssh-client curl
     - npm install -g @bitnami/readme-generator-for-helm
     - git config --global user.name "HackademINT CI"
     - git config --global user.email "ci@hackademint.org"
@@ -57,16 +57,31 @@ update readme:
     - cd ${CI_COMMIT_SHA}
     - git switch ${CI_COMMIT_BRANCH}
     - readme-generator --values values.yaml --readme Readme.md --schema "/tmp/schema.json"
-    - git add Readme.md
-    - 'git commit -m "CI bot: Update Readme.md from values.yaml"'
-    - git push
+    - |-
+      CHANGES=$(git status --porcelain | wc -l)
+      if [ "$CHANGES" -gt "0" ]
+        then
+          git add Readme.md
+          git status
+          git commit -m "CI bot: Update Readme.md from values.yaml"
+          git push
+        else
+          echo "No changes to commit, triggering another job"
+          curl --request POST \
+               --fail \
+               --form token=${FAILED_PUSH_PIPELINE_TRIGGER} \
+               --form ref=${CI_COMMIT_REF_NAME} \
+               "${CI_SERVER_URL}/api/v4/projects/${CI_PROJECT_ID}/trigger/pipeline"
+      fi
   needs:
     - lint
   rules:
-    - if: $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "webide" # We do not want this to run when a branch is merged
-      changes:
+    - if: $CI_PIPELINE_SOURCE == "trigger"
+      when: never
+    - changes:
         - values.yaml
-      when: always
+      when: on_success
+    - when: never
 
 package chart:
   stage: build
@@ -101,10 +116,12 @@ publish to gitlab packages:
   needs:
     - package chart
   rules:
-    - if: $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "webide"
-      changes:
+    - if: $CI_PIPELINE_SOURCE == "trigger"
+      when: on_success
+    - changes:
         - values.yaml
       when: never
+    - when: on_success
 
 publish to gitlab registry:
   stage: publish
@@ -116,12 +133,11 @@ publish to gitlab registry:
   needs:
     - package chart
   rules:
-    - if: $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "webide"
-      changes:
+    - changes:
         - values.yaml
       when: never
     - if: '$CI_COMMIT_TAG'
-      when: always
+      when: on_success
     - when: never
 
 publish to docker hub:
@@ -134,10 +150,9 @@ publish to docker hub:
   needs:
     - package chart
   rules:
-    - if: $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "webide"
-      changes:
+    - changes:
         - values.yaml
       when: never
     - if: '$CI_COMMIT_TAG'
-      when: always
+      when: on_success
     - when: never

@@ -54,7 +54,6 @@ helm install my-release oci://registry-1.docker.io/hackademint/ctfd
 | `oauth.enabled`                          | Whether to enable MajorLeagueCyber integration                                                                          | `false`               |
 | `oauth.clientId`                         | MajorLeagueCyber oauth client ID                                                                                        | `""`                  |
 | `oauth.clientSecret`                     | MajorLeagueCyber oauth client secret                                                                                    | `""`                  |
-| `oauth.existingSecret`                   | Name of a secret containing the MajorLeagueCyber oauth client secret                                                    | `""`                  |
 
 ### CTFd deployment basic parameters
 

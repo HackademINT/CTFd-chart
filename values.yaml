@@ -99,12 +99,10 @@ optional:
 ## @param oauth.enabled Whether to enable MajorLeagueCyber integration
 ## @param oauth.clientId MajorLeagueCyber oauth client ID
 ## @param oauth.clientSecret MajorLeagueCyber oauth client secret
-## @param oauth.existingSecret Name of a secret containing the MajorLeagueCyber oauth client secret
 oauth:
   enabled: false
   clientId: ""
   clientSecret: ""
-  existingSecret: "" #TODO actually use this
 
 
 ## @section CTFd deployment basic parameters
