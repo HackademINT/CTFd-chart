@@ -63,7 +63,8 @@ update readme:
   needs:
     - lint
   rules:
-    - changes:
+    - if: $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "webide" # We do not want this to run when a branch is merged
+      changes:
         - values.yaml
       when: always
 
@@ -100,7 +101,8 @@ publish to gitlab packages:
   needs:
     - package chart
   rules:
-    - changes:
+    - if: $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "webide"
+      changes:
         - values.yaml
       when: never
 
@@ -114,7 +116,8 @@ publish to gitlab registry:
   needs:
     - package chart
   rules:
-    - changes:
+    - if: $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "webide"
+      changes:
         - values.yaml
       when: never
     - if: '$CI_COMMIT_TAG'
@@ -131,7 +134,8 @@ publish to docker hub:
   needs:
     - package chart
   rules:
-    - changes:
+    - if: $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "webide"
+      changes:
         - values.yaml
       when: never
     - if: '$CI_COMMIT_TAG'
