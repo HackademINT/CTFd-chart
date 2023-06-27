@@ -238,13 +238,8 @@ resources:
     ## @param resources.requests.memory Requested amount of CPU for CTFd containers
     ##
     cpu: 400m
-  limits:
-    ## @param resources.limits.memory Maximum amount of RAM for CTFd containers before they are terminated
-    ##
-    memory: 512Mi
-    ## @param resources.limits.cpu Maximum amount of CPU for CTFd containers before they are terminated
-    ##
-    cpu: 800m
+  ## @param resources.limits Maximum resources for CTFd containers before they get restarted or killed
+  limits: {}
 
 ## @section CTFd service parameters
 ##
