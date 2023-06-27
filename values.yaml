@@ -235,7 +235,7 @@ resources:
     ## @param resources.requests.memory Requested amount of RAM for CTFd containers
     ##
     memory: 200Mi
-    ## @param resources.requests.memory Requested amount of CPU for CTFd containers
+    ## @param resources.requests.cpu Requested amount of CPU for CTFd containers
     ##
     cpu: 400m
   ## @param resources.limits Maximum resources for CTFd containers before they get restarted or killed
@@ -284,7 +284,7 @@ autoscaling:
     ## @param autoscaling.scaleDown.stabilizationWindowSeconds Scale down stabilization window
     ##
     stabilizationWindowSeconds: 300
-    ## @param autoscaling.scaleDown.periodSecond Scale down period
+    ## @param autoscaling.scaleDown.periodSeconds Scale down period
     ##
     periodSeconds: 15
     ## @param autoscaling.scaleDown.percent Maximum percent of pods to remove in the given period
@@ -296,7 +296,7 @@ autoscaling:
     ## @param autoscaling.scaleUp.stabilizationWindowSeconds Scale up stabilization window
     ##
     stabilizationWindowSeconds: 0
-    ## @param autoscaling.scaleUp.periodSecond Scale up period
+    ## @param autoscaling.scaleUp.periodSeconds Scale up period
     ##
     periodSeconds: 15
     ## @param autoscaling.scaleUp.percent Maximum percent of pods to add in the given period
