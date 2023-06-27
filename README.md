@@ -94,6 +94,15 @@ helm install my-release oci://registry-1.docker.io/hackademint/ctfd
 | `livenessProbe`          | a template for the startup probe |         |
 | `livenessProbe.enabled`  | Whether to enable the probe      | `true`  |
 
+### CTFd deployment resource requests and limits
+
+| Name                        | Description                                                               | Value   |
+| --------------------------- | ------------------------------------------------------------------------- | ------- |
+| `resources`                 | A container resource template                                             |         |
+| `resources.requests.memory` | Requested amount of RAM for CTFd containers                               | `200Mi` |
+| `resources.requests.cpu`    | Requested amount of CPU for CTFd containers                               | `400m`  |
+| `resources.limits`          | Maximum resources for CTFd containers before they get restarted or killed | `{}`    |
+
 ### CTFd service parameters
 
 | Name           | Description             | Value       |
@@ -108,6 +117,24 @@ helm install my-release oci://registry-1.docker.io/hackademint/ctfd
 | `ingress.enabled`     | Whether to enable the CTFd ingress        | `true`        |
 | `ingress.hostname`    | Ingress hostname                          | `example.com` |
 | `ingress.annotations` | annotation to add to the ingress resource | `{}`          |
+
+### CTFd deployment autoscaling parameters
+
+| Name                                               | Description                                                              | Value   |
+| -------------------------------------------------- | ------------------------------------------------------------------------ | ------- |
+| `autoscaling.enabled`                              | Set this to true to deploy a horizontal pod autoscaler for CTFd          | `false` |
+| `autoscaling.minReplicas`                          | Minimum number of CTFd pods                                              | `1`     |
+| `autoscaling.maxReplicas`                          | Maximum number of CTFd pods                                              | `25`    |
+| `autoscaling.targetCPU`                            | Target CPU usage for CTFd pods (in % of requested). Set to 0 to disable. | `65`    |
+| `autoscaling.targetMemory`                         | Target RAM usage for CTFd pods (in % of requested). Set to 0 to disable. | `0`     |
+| `autoscaling.scaleDown.stabilizationWindowSeconds` | Scale down stabilization window                                          | `300`   |
+| `autoscaling.scaleDown.periodSeconds`              | Scale down period                                                        | `15`    |
+| `autoscaling.scaleDown.percent`                    | Maximum percent of pods to remove in the given period                    | `100`   |
+| `autoscaling.scaleDown.pods`                       | Maximum number of pods to remove in the given period                     | `5`     |
+| `autoscaling.scaleUp.stabilizationWindowSeconds`   | Scale up stabilization window                                            | `0`     |
+| `autoscaling.scaleUp.periodSeconds`                | Scale up period                                                          | `15`    |
+| `autoscaling.scaleUp.percent`                      | Maximum percent of pods to add in the given period                       | `100`   |
+| `autoscaling.scaleUp.pods`                         | Maximum number of pods to add in the given period                        | `10`    |
 
 ### Database Parameters
 
