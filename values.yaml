@@ -225,6 +225,27 @@ livenessProbe:
   initialDelaySeconds: 10
   periodSeconds: 60
 
+## @section CTFd deployment resource requests and limits
+##
+
+## @extra resources A container resource template
+##
+resources:
+  requests:
+    ## @param resources.requests.memory Requested amount of RAM for CTFd containers
+    ##
+    memory: 200Mi
+    ## @param resources.requests.memory Requested amount of CPU for CTFd containers
+    ##
+    cpu: 400m
+  limits:
+    ## @param resources.limits.memory Maximum amount of RAM for CTFd containers before they are terminated
+    ##
+    memory: 512Mi
+    ## @param resources.limits.cpu Maximum amount of CPU for CTFd containers before they are terminated
+    ##
+    cpu: 800m
+
 ## @section CTFd service parameters
 ##
 ## @param service.type Kubernetes service type
@@ -245,36 +266,49 @@ ingress:
   annotations: {}
 
 
-## @section CTFd resource requests and limits
-##
-
-resources:
-  requests:
-    memory: 200Mi
-    cpu: 400m
-  limits:
-    memory: 512Mi
-    cpu: 800m
-
-
 ## @section CTFd deployment autoscaling parameters
 ##
 
 autoscaling:
+  ## @param autoscaling.enabled Set this to true to deploy a horizontal pod autoscaler for CTFd
+  ##
   enabled: false
+  ## @param autoscaling.minReplicas Minimum number of CTFd pods
+  ##
   minReplicas: 1
+  ## @param autoscaling.maxReplicas Maximum number of CTFd pods
+  ##
   maxReplicas: 25
+  ## @param autoscaling.targetCPU Target CPU usage for CTFd pods (in % of requested). Set to 0 to disable.
+  ##
   targetCPU: 65
+  ## @param autoscaling.targetMemory Target RAM usage for CTFd pods (in % of requested). Set to 0 to disable.
+  ##
   targetMemory: 0
   scaleDown:
+    ## @param autoscaling.scaleDown.stabilizationWindowSeconds Scale down stabilization window
+    ##
     stabilizationWindowSeconds: 300
+    ## @param autoscaling.scaleDown.periodSecond Scale down period
+    ##
     periodSeconds: 15
+    ## @param autoscaling.scaleDown.percent Maximum percent of pods to remove in the given period
+    ##
     percent: 100
+    ## @param autoscaling.scaleDown.pods Maximum number of pods to remove in the given period
     pods: 5
   scaleUp:
+    ## @param autoscaling.scaleUp.stabilizationWindowSeconds Scale up stabilization window
+    ##
     stabilizationWindowSeconds: 0
+    ## @param autoscaling.scaleUp.periodSecond Scale up period
+    ##
     periodSeconds: 15
+    ## @param autoscaling.scaleUp.percent Maximum percent of pods to add in the given period
+    ##
     percent: 100
+    ## @param autoscaling.scaleUp.pods Maximum number of pods to add in the given period
+    ##
     pods: 10
 
 
