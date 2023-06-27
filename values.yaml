@@ -257,7 +257,7 @@ resources:
     cpu: 800m
 
 
-## @section CTFd autoscaling parameters
+## @section CTFd deployment autoscaling parameters
 ##
 
 autoscaling:
@@ -265,7 +265,7 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 25
   targetCPU: 65
-  targetMemory: 75
+  targetMemory: 0
   scaleDown:
     stabilizationWindowSeconds: 300
     periodSeconds: 15
