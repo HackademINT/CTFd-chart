@@ -39,6 +39,8 @@ verify values.yaml annotations:
     - readme-generator --values values.yaml --readme README.md --schema "/tmp/schema.json"
   needs: []
   rules:
+    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME
+      when: on_success
     - changes:
         - values.yaml # If it has changed, we will push the updated Readme instead
       when: never
@@ -82,6 +84,8 @@ update readme:
   rules:
     - if: $CI_PIPELINE_SOURCE == "trigger"
       when: never
+    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME
+      when: never # We let the commit job deal with it
     - changes:
         - values.yaml
       when: on_success
