@@ -59,7 +59,7 @@ helm install my-release oci://registry-1.docker.io/hackademint/ctfd
 
 | Name                 | Description                                                          | Value                     |
 | -------------------- | -------------------------------------------------------------------- | ------------------------- |
-| `image.image`        | Full container image path for the CTFd deployment                    | `ghcr.io/ctfd/ctfd:3.5.1` |
+| `image.image`        | Full container image path for the CTFd deployment                    | `ghcr.io/ctfd/ctfd:3.5.3` |
 | `image.pullSecret`   | A pull secret name for the CTFd image                                | `""`                      |
 | `image.pullPolicy`   | CTFd image pull policy                                               | `IfNotPresent`            |
 | `httpPort`           | The http port the CTFd container listens on                          | `8000`                    |
