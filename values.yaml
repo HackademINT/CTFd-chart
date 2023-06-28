@@ -113,7 +113,7 @@ oauth:
 ## @param image.pullPolicy CTFd image pull policy
 ##
 image:
-  image: "ghcr.io/ctfd/ctfd:3.5.1"
+  image: "ghcr.io/ctfd/ctfd:3.5.3"
   pullSecret: ""
   pullPolicy: IfNotPresent
 

@@ -9,7 +9,7 @@ version: 0.1.0
 
 # The CTFd version.
 # It does not need to follow semver
-appVersion: 3.5.1
+appVersion: 3.5.3
 
 dependencies:
   - condition: mariadb.enabled
