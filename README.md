@@ -174,12 +174,12 @@ helm install my-release oci://registry-1.docker.io/hackademint/ctfd
 
 ### S3 parameters
 
-| Name                        | Description                                                          | Value              |
-| --------------------------- | -------------------------------------------------------------------- | ------------------ |
-| `externalS3.enabled`        | Whether to use an external S3 endpoint to store uploads              | `false`            |
-| `externalS3.endpoint`       | External S3 API endpoint host                                        | `s3.amazonaws.com` |
-| `externalS3.region`         | External S3 API region                                               | `us-east-1`        |
-| `externalS3.bucket`         | External S3 bucket name                                              | `ctfd`             |
-| `externalS3.accessKey`      | External S3 API access key                                           | `""`               |
-| `externalS3.secretKey`      | External S3 API secret key                                           | `""`               |
-| `externalS3.existingSecret` | Name of an existing secret containing a accessKey and secretKey keys | `""`               |
+| Name                        | Description                                                          | Value                      |
+| --------------------------- | -------------------------------------------------------------------- | -------------------------- |
+| `externalS3.enabled`        | Whether to use an external S3 endpoint to store uploads              | `false`                    |
+| `externalS3.endpoint`       | External S3 API endpoint URL                                         | `https://s3.amazonaws.com` |
+| `externalS3.region`         | External S3 API region                                               | `us-east-1`                |
+| `externalS3.bucket`         | External S3 bucket name                                              | `ctfd`                     |
+| `externalS3.accessKey`      | External S3 API access key                                           | `""`                       |
+| `externalS3.secretKey`      | External S3 API secret key                                           | `""`                       |
+| `externalS3.existingSecret` | Name of an existing secret containing a accessKey and secretKey keys | `""`                       |
