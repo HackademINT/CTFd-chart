@@ -11,6 +11,27 @@ version: 0.1.0
 # It does not need to follow semver
 appVersion: 3.5.3
 
+keywords:
+  - ctf
+  - capture the flag
+  - competition
+  - game
+  - cybersecurity
+  - challenge
+home: https://github.com/HackademINT/CTFd-chart
+sources:
+  - https://github.com/HackademINT/CTFd-chart
+  - https://github.com/CTFd/CTFd
+icon: https://raw.githubusercontent.com/CTFd/CTFd/master/CTFd/themes/core/static/img/logo.png
+
+maintainers:
+  - name: Smyler
+    email: smyler@hackademint.org
+    url: https://github.com/SmylerMC
+  - name: Soremo
+    email: soremo@hackademint.org
+    url: https://github.com/Soremojinsen
+
 dependencies:
   - condition: mariadb.enabled
     name: mariadb
