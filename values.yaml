@@ -426,9 +426,9 @@ externalS3:
   ## @param externalS3.enabled Whether to use an external S3 endpoint to store uploads
   ##
   enabled: false
-  ## @param externalS3.endpoint External S3 API endpoint host
+  ## @param externalS3.endpoint External S3 API endpoint URL
   ##
-  endpoint: s3.amazonaws.com
+  endpoint: https://s3.amazonaws.com
   ## @param externalS3.region External S3 API region
   ##
   region: us-east-1
