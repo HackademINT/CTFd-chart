@@ -5,7 +5,7 @@ description: "A chart to deploy a CTFd instance on Kubernetes."
 type: application
 
 # This is the chart version. It is expected to follow semver.
-version: 0.1.0
+version: 0.2.0
 
 # The CTFd version.
 # It does not need to follow semver
