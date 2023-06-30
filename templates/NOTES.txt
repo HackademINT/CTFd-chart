@@ -1,1 +1,17 @@
-Your CTF plateform should be ready in a few minutes.
+CHART NAME: {{ .Chart.Name }}
+CHART VERSION: {{ .Chart.Version }}
+APP VERSION: {{ .Chart.AppVersion }}
+
+** Please be patient while the chart is being deployed **
+
+Your CTFd instance can be accessed through the following DNS name from within your cluster:
+
+    {{ include "common.names.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local (port {{ .Values.service.port }})
+
+{{- if .Values.ingress.enabled }}
+
+Assuming you have properly set up a DNS record with your ingress controller, your instance is available at the following address:
+
+    http://{{ .Values.ingress.hostname }}/
+
+{{- end }}
