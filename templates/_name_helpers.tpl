@@ -95,6 +95,22 @@
 {{- end -}}
 {{- end -}}
 
+{{/* MinIO service */}}
+{{- define "ctfd.minio.serviceName" -}}
+    {{- printf "%s-minio" (include "common.names.fullname" .) -}}
+{{- end -}}
+
+{{/* MinIO service */}}
+{{- define "ctfd.minio.bucketName" -}}
+    {{- $parts := split "." .Values.minio.defaultBuckets -}}
+    {{- $parts._0 -}}
+{{- end -}}
+
+{{/* MinIO secret */}}
+{{- define "ctfd.minio.secretName" -}}
+    {{- printf "%s-minio" (include "common.names.fullname" .) -}}
+{{- end -}}
+
 {{/*
   Returns the name of the secret which contains the S3 credentials credentials.
   This will either be :

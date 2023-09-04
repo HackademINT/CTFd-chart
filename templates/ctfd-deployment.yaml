@@ -249,7 +249,24 @@ spec:
                   name: {{ include "ctfd.oauth.oauthSecretName" . }}
                   key: oauthClientSecret
             {{- end }}
-            {{- if .Values.externalS3.enabled }}
+            {{- if .Values.minio.enabled }}
+            - name: UPLOAD_PROVIDER
+              value: s3
+            - name: AWS_S3_ENDPOINT_URL
+              value: {{ printf "http://%s:9000" (include "ctfd.minio.serviceName" .) | quote }}
+            - name: AWS_S3_BUCKET
+              value: {{ include "ctfd.minio.bucketName" . | quote }}
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ctfd.minio.secretName" . | quote }}
+                  key: root-user
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ctfd.minio.secretName" . | quote }}
+                  key: root-password
+            {{- else if .Values.externalS3.enabled }}
             - name: UPLOAD_PROVIDER
               value: s3
             - name: AWS_S3_ENDPOINT_URL
