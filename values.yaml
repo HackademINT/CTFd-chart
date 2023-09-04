@@ -422,16 +422,16 @@ externalRedis:
 
 ## @section MinIO S3 parameters
 minio:
-  ## @param redis.enabled Deploy a Redis server to provide an upload provider
+  ## @param minio.enabled Deploy a MinIO server to provide an upload provider
   ## To use an external S3 endpoint set this to false and configure the `externalS3.*` parameters
   ## If neither this nor `externalS3.enabled` is set, CTFd will use its internal file-based upload system.
   ##
   enabled: true
-  ## @param mode MinIO&reg; server mode (`standalone` or `distributed`)
+  ## @param minio.mode MinIO&reg; server mode (`standalone` or `distributed`)
   ## ref: https://docs.minio.io/docs/distributed-minio-quickstart-guide
   ##
   mode: standalone
-  ## @param defaultBuckets Bucket name to use for CTFd
+  ## @param minio.defaultBuckets Bucket name to use for CTFd
   ## e.g:
   ## defaultBuckets: "my-bucket, my-second-bucket"
   ##
@@ -439,15 +439,17 @@ minio:
   ## MinIO&reg; authentication parameters
   ##
   auth:
-    ## @param auth.rootUser MinIO&reg; root username
+    ## @param minio.auth.rootUser MinIO&reg; root username
     ##
     rootUser: admin
-    ## @param auth.rootPassword Password for MinIO&reg; root user
+    ## @param minio.auth.rootPassword Password for MinIO&reg; root user
     ##
     rootPassword: ""
-    ## @param auth.existingSecret Use existing secret for credentials details (`auth.rootUser` and `auth.rootPassword` will be ignored and picked up from this secret). The secret has to contain the keys `root-user` and `root-password`)
+    ## @param minio.auth.existingSecret Use existing secret for credentials details (`minio.auth.rootUser` and `minio.auth.rootPassword` will be ignored and picked up from this secret). The secret has to contain the keys `root-user` and `root-password`)
     ##
     existingSecret: ""
+  ## @param minio.externalEndpoint the external HTTP(S) S3 API endpoint MinIO will be accessible from (e.g. `https://s3.my-ctf.com`). This endpoint needs to be reachable by users. If this value is not set, MinIO's API ingress configuration will be used. If this is not set either, CTFd will use the API service name.
+  externalEndpoint: ""
 
 ## @section S3 parameters
 ##

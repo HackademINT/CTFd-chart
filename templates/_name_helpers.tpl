@@ -106,6 +106,19 @@
     {{- $parts._0 -}}
 {{- end -}}
 
+{{/* MinIO endpoint */}}
+{{- define "ctfd.minio.endpoint" -}}
+    {{- if .Values.minio.externalEndpoint -}}
+        {{ .Values.minio.externalEndpoint }}
+    {{- else if .Values.minio.apiIngress.enabled -}}
+        {{- $scheme := .Values.minio.apiIngress.tls | ternary "https" "http" -}}
+        {{- $path := .Values.minio.apiIngress.path | default "" -}}
+        {{- printf "%s://%s%s" $scheme .Values.minio.apiIngress.hostname $path -}}
+    {{- else -}}
+        {{ printf "http://%s:%s" (include "ctfd.minio.serviceName" . ) (.Values.minio.service.ports.api | default 80) }}
+    {{- end -}}
+{{- end -}}
+
 {{/* MinIO secret */}}
 {{- define "ctfd.minio.secretName" -}}
     {{- printf "%s-minio" (include "common.names.fullname" .) -}}
