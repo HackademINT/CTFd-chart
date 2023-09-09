@@ -172,6 +172,18 @@ helm install my-release oci://registry-1.docker.io/hackademint/ctfd
 | `externalRedis.password`       | External Redis password                                                | `""`         |
 | `externalRedis.existingSecret` | Name of an existing secret containing a redis-password key             | `""`         |
 
+### MinIO S3 parameters
+
+| Name                        | Description                                                                                                                                                                                                                                                                               | Value        |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| `minio.enabled`             | Deploy a MinIO server to provide an upload provider                                                                                                                                                                                                                                       | `true`       |
+| `minio.mode`                | MinIO&reg; server mode (`standalone` or `distributed`)                                                                                                                                                                                                                                    | `standalone` |
+| `minio.defaultBuckets`      | Bucket name to use for CTFd                                                                                                                                                                                                                                                               | `ctfd`       |
+| `minio.auth.rootUser`       | MinIO&reg; root username                                                                                                                                                                                                                                                                  | `admin`      |
+| `minio.auth.rootPassword`   | Password for MinIO&reg; root user                                                                                                                                                                                                                                                         | `""`         |
+| `minio.auth.existingSecret` | Use existing secret for credentials details (`minio.auth.rootUser` and `minio.auth.rootPassword` will be ignored and picked up from this secret). The secret has to contain the keys `root-user` and `root-password`)                                                                     | `""`         |
+| `minio.externalEndpoint`    | the external HTTP(S) S3 API endpoint MinIO will be accessible from (e.g. `https://s3.my-ctf.com`). This endpoint needs to be reachable by users. If this value is not set, MinIO's API ingress configuration will be used. If this is not set either, CTFd will use the API service name. | `""`         |
+
 ### S3 parameters
 
 | Name                        | Description                                                          | Value                      |
