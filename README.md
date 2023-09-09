@@ -6,9 +6,12 @@ This Helm chart was originally developed by [HackademINT](https://www.hackademin
 
 This chart is inspired by [Bitnami](https://bitnami.com/)'s [high quality charts](https://github.com/bitnami/charts/tree/main), and uses Bitnami packages for its dependencies.
 
+By default, the chart will deploy everything needed to operate CTFd in a high availability deployment, including Redis, MariaDB and MinIO.
+However, you might want to use external services instead when running in production.
+
 ## State of this project
 
-While this chart can, and has been used in production successfully, it is still an ongoing project and will not work in all configurations. Upload support is especially limited, and the only reliable solution at present is to use an external S3 bucket.
+While this chart can, and has been used in production successfully, it is still an ongoing project and all configuration haven't been thoroughly tested.
 
 ## TL;DR
 
