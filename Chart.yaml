@@ -33,6 +33,9 @@ maintainers:
     url: https://github.com/Soremojinsen
 
 dependencies:
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    version: 2.x.x
   - condition: mariadb.enabled
     name: mariadb
     repository: https://charts.bitnami.com/bitnami
